@@ -1,5 +1,4 @@
 import React from "react";
-// import logo from "./../images/logo.svg";
 import containerStyles from './container.module.css';
 
 function Container(props) {
