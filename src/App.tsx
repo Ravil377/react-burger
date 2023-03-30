@@ -14,7 +14,7 @@ function App() {
       <AppHeader />
       <main>
         <Container >
-          <div className='main pt-10 text'>
+          <div className='main pt-10 text pl-5 pr-5'>
             <h1>Соберите бургер</h1>
             <BurgerIngredients ingredients={ingredients} selectIngredients={selectIngredient}/>
             <BurgerConstructor ingredients={ingredients} selectIngredients={selectIngredient}/>
