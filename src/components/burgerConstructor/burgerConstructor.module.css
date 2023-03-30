@@ -1,0 +1,41 @@
+.list {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    overflow: auto;
+    width: fit-content;
+    height: calc(100% - 185px);
+}
+.constructor {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    width: 100%;
+    padding-bottom: 20px;
+}
+.ingredients {
+    display: flex;
+    align-items: center;
+    column-gap: 8px;
+    justify-content: space-between;
+}
+.button {
+    outline: none;
+    background: none;
+    border: none;
+    padding: 0;
+    height: fit-content;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.buttons {
+    display: flex;
+    align-items: center;
+    column-gap: 40px;
+}
+.result {
+    display: flex;
+    align-items: center;
+    column-gap: 8px;
+}

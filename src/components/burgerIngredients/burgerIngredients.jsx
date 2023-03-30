@@ -1,26 +1,22 @@
-import React, { Children, useState } from "react";
+import React, { useRef } from 'react';
 import burgerIngredientsStyles from './burgerIngredients.module.css';
-import { Tab, CurrencyIcon, Counter, BurgerIcon, ListIcon, Logo, ProfileIcon } from '@ya.praktikum/react-developer-burger-ui-components'
+import { Tab, CurrencyIcon, Counter } from '@ya.praktikum/react-developer-burger-ui-components'
 import {TAB1, TAB2, TAB3} from '../../utils/constants';
 
-const TabPanel = () => {
+const TabPanel = (props) => {
     const [current, setCurrent] = React.useState('bun')
 
-    const scrollToIngredient = (value) => {
-        setCurrent(value);
-        const type = document.getElementById(value);
-        type.scrollIntoView({ behavior: "smooth" });
-    }
+    const scrollToIngredient = (refIndex) => props.refs[refIndex].current.scrollIntoView({ behavior: 'smooth' });
 
     return (
         <div style={{ display: 'flex' }}>
-            <Tab value="bun" active={current === 'bun'} onClick={scrollToIngredient}>
+            <Tab value="bun" active={current === 'bun'} onClick={()=>{setCurrent('bun'); scrollToIngredient(0)}}>
                 {TAB1}
             </Tab>
-            <Tab value="sauce" active={current === 'sauce'} onClick={scrollToIngredient}>
+            <Tab value="sauce" active={current === 'sauce'} onClick={()=>{setCurrent('sauce'); scrollToIngredient(1)}}>
                 {TAB2}
             </Tab>
-            <Tab value="main" active={current === 'main'} onClick={scrollToIngredient}>
+            <Tab value="main" active={current === 'main'} onClick={()=>{setCurrent('main'); scrollToIngredient(2)}}>
                 {TAB3}
             </Tab>
         </div>
@@ -36,7 +32,6 @@ const TabContent = (props) => {
 }
 
 const IngredientCard = ({image, fat, name, count}) => {
-    console.log(count, name)
     return (
         <li className="pl-4 pr-4">
             {count > 0 && <Counter count={count} size="default" extraClass="m-1" />}
@@ -47,7 +42,7 @@ const IngredientCard = ({image, fat, name, count}) => {
     )
 }
 
-const IngredientList = ({type, ingredients, id, selectIngredients}) => {
+const IngredientList = ({type, ingredients, id, selectIngredients, refs}) => {
     const isSelected = (id) => {
         let res = selectIngredients.find(select => select.id === id && select);
         return res ? res.count : 0;
@@ -55,7 +50,7 @@ const IngredientList = ({type, ingredients, id, selectIngredients}) => {
 
     return (
         <>
-            <h2 className="type text text_type_main-medium pt-10" id={id}>{type}</h2>
+            <h2 className="type text text_type_main-medium pt-10" ref={refs[id]}>{type}</h2>
             <ul className={`pl-4 pr-4 pt-6 ${burgerIngredientsStyles.list}`} >
                 {ingredients.map(item => 
 
@@ -72,22 +67,22 @@ const IngredientList = ({type, ingredients, id, selectIngredients}) => {
     )
 }
 
-
-
-
-
 function BurgerIngredients(props) {
-    const [selectIngredient, setSelectIngredient] = useState([{id: '60666c42cc7b410027a1a9b1', count: 1}, {id:'60666c42cc7b410027a1a9b9', count: 1}]);
+    const refs = [
+        useRef(null),
+        useRef(null),
+        useRef(null)
+    ];
 
     const filterByType = (type) => props.ingredients.filter(item => item.type === type);
 
     return (
-        <section className="ingredients">
-            <TabPanel />
+        <section className={burgerIngredientsStyles.ingredients}>
+            <TabPanel refs={refs} />
             <TabContent >
-                <IngredientList type={"Булки"} ingredients={filterByType('bun')} id={"bun"} selectIngredients={selectIngredient} />
-                <IngredientList type={"Соусы"} ingredients={filterByType('sauce')} id={"sauce"} selectIngredients={selectIngredient} />
-                <IngredientList type={"Начинки"} ingredients={filterByType('main')} id={"main"} selectIngredients={selectIngredient} />
+                <IngredientList type={"Булки"} refs={refs} ingredients={filterByType('bun')} id={0} selectIngredients={props.selectIngredients} />
+                <IngredientList type={"Соусы"} refs={refs} ingredients={filterByType('sauce')} id={1} selectIngredients={props.selectIngredients} />
+                <IngredientList type={"Начинки"} refs={refs} ingredients={filterByType('main')} id={2} selectIngredients={props.selectIngredients} />
             </TabContent>
         </section>
     );

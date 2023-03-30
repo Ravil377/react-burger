@@ -1,5 +1,6 @@
 .ingredients {
     grid-area: ingredients;
+    padding-bottom: 20px;
 }
 .list {
     list-style: none;
@@ -37,6 +38,7 @@
     margin-top: 40px;
     max-height: 756px;
     overflow: auto;
+    height: calc(100vh - 300px);;
 }
 .content > h2:first-child {
     padding-top: 0;

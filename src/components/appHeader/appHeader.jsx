@@ -9,7 +9,7 @@ import {CONSTRUCTOR, ORDERS, PERSONAL} from '../../utils/constants';
 function AppHeader() {
     return (
         <>
-            <header className={`pt-4 pb-4`} >
+            <header className={`pt-4 pb-4 ${headerStyles.header}`} >
                 <Container>
                     <nav className={headerStyles.nav} >
                         <div className={headerStyles.buttons}>
