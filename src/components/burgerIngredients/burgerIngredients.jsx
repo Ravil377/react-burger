@@ -2,6 +2,8 @@ import React, { useRef } from 'react';
 import burgerIngredientsStyles from './burgerIngredients.module.css';
 import { Tab, CurrencyIcon, Counter } from '@ya.praktikum/react-developer-burger-ui-components'
 import {TAB1, TAB2, TAB3} from '../../utils/constants';
+import { ingredientsPropTypes } from '../burgerConstructor/burgerConstructor';
+import PropTypes from 'prop-types';
 
 const TabPanel = (props) => {
     const [current, setCurrent] = React.useState('bun')
@@ -23,6 +25,15 @@ const TabPanel = (props) => {
     )
 }
 
+TabPanel.propTypes = {
+    refs: PropTypes.shape({
+        bun: PropTypes.object,
+        sauce: PropTypes.object,
+        main: PropTypes.object,
+    }).isRequired
+};
+
+
 const TabContent = (props) => {
     return (
         <div className={`custom-scroll ${burgerIngredientsStyles.content}`}>
@@ -30,19 +41,29 @@ const TabContent = (props) => {
         </div>
     )
 }
+TabContent.propTypes = {
+    children: PropTypes.func.isRequired,
+};
 
-const IngredientCard = ({image, fat, name, count}) => {
+const IngredientCard = ({image, price, name, count}) => {
     return (
         <li className="pl-4 pr-4">
             {count > 0 && <Counter count={count} size="default" extraClass="m-1" />}
             <img src={image} alt={name} />
-            <p className={`text text_type_digits-default ${burgerIngredientsStyles.price}`}>{fat}<CurrencyIcon type="primary" /></p>
+            <p className={`text text_type_digits-default ${burgerIngredientsStyles.price}`}>{price}<CurrencyIcon type="primary" /></p>
             <p className={`text text_type_main-small ${burgerIngredientsStyles.name}`}>{name}</p>
         </li>
     )
 }
 
-const IngredientList = ({type, ingredients, id, selectIngredients, refs}) => {
+IngredientCard.propTypes = {
+    name: PropTypes.string.isRequired,
+    price: PropTypes.number.isRequired,
+    image: PropTypes.string.isRequired,
+    count: PropTypes.number.isRequired,
+};
+
+const IngredientList = ({ id, selectIngredients, type, refs, ingredients }) => {
     const isSelected = (id) => {
         let res = selectIngredients.find(select => select.id === id && select);
         return res ? res.count : 0;
@@ -57,7 +78,7 @@ const IngredientList = ({type, ingredients, id, selectIngredients, refs}) => {
                     <IngredientCard 
                         key={item._id}
                         image={item.image}
-                        fat={item.fat}
+                        price={item.price}
                         name={item.name}
                         count={isSelected(item._id)}
                     />
@@ -67,26 +88,53 @@ const IngredientList = ({type, ingredients, id, selectIngredients, refs}) => {
     )
 }
 
-function BurgerIngredients(props) {
+IngredientList.propTypes = {
+    type: PropTypes.string.isRequired,
+    ingredients: PropTypes.arrayOf(ingredientsPropTypes).isRequired,
+    id: PropTypes.string.isRequired,
+    selectIngredients: PropTypes.arrayOf(
+        PropTypes.shape({
+            id: PropTypes.string.isRequired,
+            count: PropTypes.number.isRequired,
+        })
+    ).isRequired,
+    refs: PropTypes.shape({
+        bun: PropTypes.object,
+        sauce: PropTypes.object,
+        main: PropTypes.object,
+    }).isRequired
+};
+
+function BurgerIngredients({ingredients, selectIngredients}) {
     const refs = [
         useRef(null),
         useRef(null),
         useRef(null)
     ];
 
-    const filterByType = (type) => props.ingredients.filter(item => item.type === type);
+    const filterByType = (type) => ingredients.filter(item => item.type === type);
 
     return (
         <section className={burgerIngredientsStyles.ingredients}>
             <TabPanel refs={refs} />
             <TabContent >
-                <IngredientList type={"Булки"} refs={refs} ingredients={filterByType('bun')} id={0} selectIngredients={props.selectIngredients} />
-                <IngredientList type={"Соусы"} refs={refs} ingredients={filterByType('sauce')} id={1} selectIngredients={props.selectIngredients} />
-                <IngredientList type={"Начинки"} refs={refs} ingredients={filterByType('main')} id={2} selectIngredients={props.selectIngredients} />
+                <IngredientList type={"Булки"} refs={refs} ingredients={filterByType('bun')} id={0} selectIngredients={selectIngredients} />
+                <IngredientList type={"Соусы"} refs={refs} ingredients={filterByType('sauce')} id={1} selectIngredients={selectIngredients} />
+                <IngredientList type={"Начинки"} refs={refs} ingredients={filterByType('main')} id={2} selectIngredients={selectIngredients} />
             </TabContent>
         </section>
     );
 }
+
+BurgerIngredients.propTypes = {
+    ingredients: PropTypes.arrayOf(ingredientsPropTypes).isRequired,
+    selectIngredients: PropTypes.arrayOf(
+        PropTypes.shape({
+            id: PropTypes.string.isRequired,
+            count: PropTypes.number.isRequired,
+        })
+    ).isRequired
+};
 
 export default BurgerIngredients;
 
