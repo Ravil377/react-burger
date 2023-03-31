@@ -1,14 +1,13 @@
-import './App.css';
-import React, { Children, useState } from "react";
-import AppHeader from './components/appHeader/appHeader';
-import Container from './components/container/container';
-import BurgerIngredients from './components/burgerIngredients/burgerIngredients';
-import BurgerConstructor from './components/burgerConstructor/burgerConstructor';
-import {ingredients} from './utils/constants';
+import './app.css';
+import { useState } from "react";
+import AppHeader from '../appHeader/appHeader';
+import Container from '../container/container';
+import BurgerIngredients from '../burgerIngredients/burgerIngredients';
+import BurgerConstructor from '../burgerConstructor/burgerConstructor';
+import {ingredients} from '../../utils/constants';
 
-function App() {
+export function App() {
   const [selectIngredient, setSelectIngredient] = useState([{id: '60666c42cc7b410027a1a9b1', count: 1}, {id:'60666c42cc7b410027a1a9b9', count: 1}]);
-
 
   return (
     <>
@@ -25,5 +24,3 @@ function App() {
     </>
   );
 }
-
-export default App;

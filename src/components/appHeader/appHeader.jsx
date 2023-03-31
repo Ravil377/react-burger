@@ -13,18 +13,24 @@ function AppHeader() {
                 <Container>
                     <nav className={headerStyles.nav} >
                         <div className={headerStyles.buttons}>
-                            <Button htmlType="button" className={`${headerStyles.button} ${headerStyles.active} pt-4 pb-4 pl-5 pr-5`}>
-                                <BurgerIcon style={{background: 'unset'}} pe="primary" /> {CONSTRUCTOR}
-                            </Button>
-                            <Button htmlType="button" className={`${headerStyles.button} pt-4 pb-4 pl-5 pr-5`} >
-                                <ListIcon style={{background: 'unset'}} pe="primary" /> {ORDERS}
-                            </Button>
+                            <a>
+                                <Button htmlType="button" className={`${headerStyles.button} ${headerStyles.active} pt-4 pb-4 pl-5 pr-5`}>
+                                    <BurgerIcon style={{background: 'unset'}} pe="primary" /> {CONSTRUCTOR}
+                                </Button>
+                            </a>
+                            <a>
+                                <Button htmlType="button" className={`${headerStyles.button} pt-4 pb-4 pl-5 pr-5`} >
+                                    <ListIcon style={{background: 'unset'}} pe="primary" /> {ORDERS}
+                                </Button>
+                            </a>
                         </div>
                         <Logo />
                         <div className={headerStyles.buttons}>
-                            <Button htmlType="button" className={`${headerStyles.button} pt-4 pb-4 pl-5 pr-5`} >
-                                <ProfileIcon type="primary" /> {PERSONAL}
-                            </Button>
+                            <a>
+                                <Button htmlType="button" className={`${headerStyles.button} pt-4 pb-4 pl-5 pr-5`} >
+                                    <ProfileIcon type="primary" /> {PERSONAL}
+                                </Button>
+                            </a>
                         </div>
                     </nav>
                 </Container>

@@ -1,0 +1,11 @@
+.price {
+    display: flex;
+    flex-wrap: nowrap;
+    column-gap: 9px;
+    justify-content: center;
+}
+
+.name {
+    min-height: 48px;
+    text-align: center;
+}

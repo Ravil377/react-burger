@@ -1,5 +1,5 @@
-import React from "react";
 import containerStyles from './container.module.css';
+import PropTypes from 'prop-types';
 
 function Container(props) {
     return (
@@ -10,5 +10,9 @@ function Container(props) {
         </div>
     );
 }
+
+Container.propTypes = {
+    children: PropTypes.node.isRequired,
+};
 
 export default Container;
