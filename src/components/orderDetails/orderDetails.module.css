@@ -1,0 +1,14 @@
+.container {
+    display: flex;
+    flex-direction: column;
+}
+.order, .title, .start, .wait {
+    text-align: center;
+}
+.success {
+    width: 120px;
+    height: 120px;
+    object-fit: contain;
+    object-position: center;
+    margin: 0 auto;
+}

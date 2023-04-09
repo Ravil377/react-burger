@@ -1,0 +1,28 @@
+.container {display: flex; flex-direction: column;}
+.title {
+    line-height: 1.7;
+}
+
+img {
+    margin: 0 auto;
+    max-width: 480px;
+    width: 100%;
+    object-fit: contain;
+    object-position: center;
+}
+.name {
+    text-align: center;
+}
+.list {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+}
+.list li p {
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+}

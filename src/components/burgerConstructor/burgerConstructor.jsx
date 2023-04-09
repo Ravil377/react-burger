@@ -8,9 +8,11 @@ import { ConstructorList } from './constructorList/constructorList';
 BurgerConstructor.propTypes = {
     ingredients: PropTypes.arrayOf(ingredientsPropTypes).isRequired,
     selectIngredients: PropTypes.arrayOf(selectIngredientsPropTypes).isRequired,
+    modalOpen: PropTypes.func.isRequired,
 };
   
-function BurgerConstructor({ingredients, selectIngredients}) {
+function BurgerConstructor({ ingredients, selectIngredients, modalOpen }) {
+
     const filterByType = (type, ingredient) => ingredient.filter(item => item.type === type);
 
     return (
@@ -24,11 +26,10 @@ function BurgerConstructor({ingredients, selectIngredients}) {
                 <p className={`text text_type_digits-medium ${burgerConstructorStyles.result}`}>610 
                     <CurrencyIcon type="primary" />
                 </p>
-                <Button htmlType="button" type="primary" size="large">
+                <Button htmlType="button" type="primary" size="large" onClick={modalOpen}>
                     Оформить заказ
                 </Button>
             </div>
-
         </section>
     );
 }

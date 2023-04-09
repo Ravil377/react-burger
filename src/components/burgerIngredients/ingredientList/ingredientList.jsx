@@ -3,7 +3,7 @@ import { ingredientsPropTypes, selectIngredientsPropTypes, refsPropTypes } from 
 import PropTypes from 'prop-types';
 import { IngredientCard } from '../ingredientCard/ingredientCard';
 
-export const IngredientList = ({ refId, selectIngredients, type, refs, ingredients }) => {
+export const IngredientList = ({ refId, selectIngredients, type, refs, ingredients, modalOpen, openIngredientInModal }) => {
     const isSelected = (_id) => {
         let res = selectIngredients.find(select => select.id === _id && select);
         return res ? res.count : 0;
@@ -16,10 +16,13 @@ export const IngredientList = ({ refId, selectIngredients, type, refs, ingredien
                 {ingredients.map(item => 
                     <IngredientCard 
                         key={item._id}
+                        id={item._id}
                         image={item.image}
                         price={item.price}
                         name={item.name}
                         count={isSelected(item._id)}
+                        modalOpen={modalOpen}
+                        openIngredientInModal={openIngredientInModal}
                     />
                 )}
             </ul>
@@ -32,4 +35,6 @@ IngredientList.propTypes = {
     id: PropTypes.number.isRequired,
     selectIngredients: PropTypes.arrayOf(selectIngredientsPropTypes).isRequired,
     refs: PropTypes.arrayOf(refsPropTypes).isRequired,
+    openIngredientInModal: PropTypes.func.isRequired,
+    modalOpen: PropTypes.func.isRequired,
 };

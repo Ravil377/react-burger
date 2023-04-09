@@ -1,13 +1,49 @@
+import React from "react";
 import './app.css';
 import { useState } from "react";
 import AppHeader from '../appHeader/appHeader';
 import Container from '../container/container';
 import BurgerIngredients from '../burgerIngredients/burgerIngredients';
 import BurgerConstructor from '../burgerConstructor/burgerConstructor';
-import {ingredients} from '../../utils/constants';
+import api from '../../utils/api';
+import { Modal } from '../modal/modal';
+import { ModalOverlay } from '../modalOverlay/modalOverlay';
+import { IngredientDetails } from '../ingredientDetails/ingredientDetails';
+import { OrderDetails } from '../orderDetails/orderDetails';
+
 
 export function App() {
   const [selectIngredient, setSelectIngredient] = useState([{id: '60666c42cc7b410027a1a9b1', count: 1}, {id:'60666c42cc7b410027a1a9b9', count: 1}]);
+  const [selectIngredientForModal, setSelectIngredientForModal] = useState(null);
+  const [showModal, setShowModal] = useState(false);
+
+  const [ingredients, setIngredients] = useState({
+    isLoading: false,
+    isError: false,
+    textError: '',
+    data: []
+  })
+  
+  const modalOpen = () => setShowModal(true);
+
+  const modalClose = () => {
+    setShowModal(false);
+    setSelectIngredientForModal('');
+  }
+
+  const openIngredientInModal = (id) => {
+    const ingredient = ingredients.data.find(ingredient => ingredient._id === id);
+    setSelectIngredientForModal(ingredient);
+  }
+
+  React.useEffect(() => {
+    setIngredients({ ...ingredients, isLoading: true, isError: false, textError: '' });
+    api.getInitialIngredients()
+        .then((res) => {
+            setIngredients({ ...ingredients, isLoading: false, data: res.data });
+        })
+        .catch((err) => setIngredients({ ...ingredients, isLoading: false, isError: true, textError: err }));
+  }, []);
 
   return (
     <>
@@ -16,10 +52,35 @@ export function App() {
         <Container >
           <div className='main pt-10 text pl-5 pr-5'>
             <h1>Соберите бургер</h1>
-            <BurgerIngredients ingredients={ingredients} selectIngredients={selectIngredient}/>
-            <BurgerConstructor ingredients={ingredients} selectIngredients={selectIngredient}/>
+            {(!ingredients.isLoading && !ingredients.isError && ingredients.data.length) 
+            ? <>
+                <BurgerIngredients 
+                    ingredients={ingredients.data} 
+                    selectIngredients={selectIngredient} 
+                    modalOpen={modalOpen}
+                    openIngredientInModal={openIngredientInModal}
+                />
+                <BurgerConstructor 
+                  ingredients={ingredients.data} 
+                  selectIngredients={selectIngredient}
+                  modalOpen={modalOpen}
+                />
+              </>
+            : ''
+            }
           </div>
         </Container>
+        {showModal &&
+          <>
+            <ModalOverlay showModal={showModal} modalClose={modalClose} />
+            <Modal showModal={showModal} modalClose={modalClose} >
+              {selectIngredientForModal 
+                ? <IngredientDetails ingredient={selectIngredientForModal} />
+                : <OrderDetails />
+              }
+            </Modal>
+          </>
+        }
       </main>
     </>
   );

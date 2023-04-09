@@ -6,7 +6,7 @@ import { TabPanel } from './tabPanel/tabPanel';
 import { TabContent } from './tabContent/tabContent';
 import { IngredientList } from './ingredientList/ingredientList';
 
-function BurgerIngredients({ingredients, selectIngredients}) {
+function BurgerIngredients({ingredients, selectIngredients, modalOpen, openIngredientInModal}) {
     const refs = [
         useRef(null),
         useRef(null),
@@ -19,9 +19,33 @@ function BurgerIngredients({ingredients, selectIngredients}) {
         <section className={burgerIngredientsStyles.ingredients}>
             <TabPanel refs={refs} />
             <TabContent >
-                <IngredientList type={"Булки"} refs={refs} ingredients={filterByType('bun')} id={0} selectIngredients={selectIngredients} />
-                <IngredientList type={"Соусы"} refs={refs} ingredients={filterByType('sauce')} id={1} selectIngredients={selectIngredients} />
-                <IngredientList type={"Начинки"} refs={refs} ingredients={filterByType('main')} id={2} selectIngredients={selectIngredients} />
+                <IngredientList 
+                    type={"Булки"} 
+                    refs={refs} 
+                    ingredients={filterByType('bun')} 
+                    id={0} 
+                    selectIngredients={selectIngredients} 
+                    modalOpen={modalOpen}
+                    openIngredientInModal={openIngredientInModal}
+                />
+                <IngredientList 
+                    type={"Соусы"} 
+                    refs={refs} 
+                    ingredients={filterByType('sauce')} 
+                    id={1} 
+                    selectIngredients={selectIngredients} 
+                    modalOpen={modalOpen}
+                    openIngredientInModal={openIngredientInModal}
+                />
+                <IngredientList 
+                    type={"Начинки"} 
+                    refs={refs} 
+                    ingredients={filterByType('main')} 
+                    id={2} 
+                    selectIngredients={selectIngredients} 
+                    modalOpen={modalOpen} 
+                    openIngredientInModal={openIngredientInModal}
+                />
             </TabContent>
         </section>
     );
@@ -30,6 +54,8 @@ function BurgerIngredients({ingredients, selectIngredients}) {
 BurgerIngredients.propTypes = {
     ingredients: PropTypes.arrayOf(ingredientsPropTypes).isRequired,
     selectIngredients: PropTypes.arrayOf(selectIngredientsPropTypes).isRequired,
+    openIngredientInModal: PropTypes.func.isRequired,
+    modalOpen: PropTypes.func.isRequired,
 };
 
 export default BurgerIngredients;

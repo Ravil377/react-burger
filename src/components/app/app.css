@@ -1,3 +1,7 @@
+body {
+    position: relative;
+}
+
 .main {
     display: grid;
     grid-template-areas: 'title title' 'ingredients constructor';
