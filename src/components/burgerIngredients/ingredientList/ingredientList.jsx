@@ -8,7 +8,6 @@ export const IngredientList = ({ refId, selectIngredients, type, refs, ingredien
         let res = selectIngredients.find(select => select.id === _id && select);
         return res ? res.count : 0;
     }
-    console.log(refId)
     return (
         <>
             <h2 className="type text text_type_main-medium pt-10" ref={refs[refId]}>{type}</h2>
