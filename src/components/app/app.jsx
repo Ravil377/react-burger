@@ -7,13 +7,12 @@ import BurgerIngredients from '../burgerIngredients/burgerIngredients';
 import BurgerConstructor from '../burgerConstructor/burgerConstructor';
 import api from '../../utils/api';
 import { Modal } from '../modal/modal';
-import { ModalOverlay } from '../modalOverlay/modalOverlay';
 import { IngredientDetails } from '../ingredientDetails/ingredientDetails';
 import { OrderDetails } from '../orderDetails/orderDetails';
 
 
 export function App() {
-  const [selectIngredient, setSelectIngredient] = useState([{id: '60666c42cc7b410027a1a9b1', count: 1}, {id:'60666c42cc7b410027a1a9b9', count: 1}]);
+  const [selectIngredient, setSelectIngredient] = useState([]);
   const [selectIngredientForModal, setSelectIngredientForModal] = useState(null);
   const [showModal, setShowModal] = useState(false);
 
@@ -28,7 +27,7 @@ export function App() {
 
   const modalClose = () => {
     setShowModal(false);
-    setSelectIngredientForModal('');
+    setSelectIngredientForModal(null);
   }
 
   const openIngredientInModal = (id) => {
@@ -72,7 +71,6 @@ export function App() {
         </Container>
         {showModal &&
           <>
-            <ModalOverlay showModal={showModal} modalClose={modalClose} />
             <Modal showModal={showModal} modalClose={modalClose} >
               {selectIngredientForModal 
                 ? <IngredientDetails ingredient={selectIngredientForModal} />

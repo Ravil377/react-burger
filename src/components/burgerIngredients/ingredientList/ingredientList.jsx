@@ -8,7 +8,7 @@ export const IngredientList = ({ refId, selectIngredients, type, refs, ingredien
         let res = selectIngredients.find(select => select.id === _id && select);
         return res ? res.count : 0;
     }
-
+    console.log(refId)
     return (
         <>
             <h2 className="type text text_type_main-medium pt-10" ref={refs[refId]}>{type}</h2>
@@ -16,10 +16,7 @@ export const IngredientList = ({ refId, selectIngredients, type, refs, ingredien
                 {ingredients.map(item => 
                     <IngredientCard 
                         key={item._id}
-                        id={item._id}
-                        image={item.image}
-                        price={item.price}
-                        name={item.name}
+                        ingredient={item}
                         count={isSelected(item._id)}
                         modalOpen={modalOpen}
                         openIngredientInModal={openIngredientInModal}
@@ -32,7 +29,7 @@ export const IngredientList = ({ refId, selectIngredients, type, refs, ingredien
 IngredientList.propTypes = {
     type: PropTypes.string.isRequired,
     ingredients: PropTypes.arrayOf(ingredientsPropTypes).isRequired,
-    id: PropTypes.number.isRequired,
+    refId: PropTypes.number.isRequired,
     selectIngredients: PropTypes.arrayOf(selectIngredientsPropTypes).isRequired,
     refs: PropTypes.arrayOf(refsPropTypes).isRequired,
     openIngredientInModal: PropTypes.func.isRequired,

@@ -7,9 +7,4 @@
     background: rgba(0, 0, 0, 0.6);
     transition: .5s, height 0s .5s;
 }
-.overlay:not(.active) {
-    height: 0;
-    opacity: 0;
-    overflow: hidden;
-}
 

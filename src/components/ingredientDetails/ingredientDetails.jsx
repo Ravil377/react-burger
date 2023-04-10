@@ -1,6 +1,6 @@
 import ingredientDetailStyles from './ingredientDetails.module.css';
 import { titleDetail, caloriesDetail, proteinDetail, fatDetail, carbohydratesDetail } from '../../utils/constants';
-import { ingredientsPropTypes } from '../../utils/propTypes';
+import { ingredient } from '../../utils/propTypes';
 import PropTypes from 'prop-types';
 
 export const IngredientDetails = (ingredient) => {
@@ -24,5 +24,5 @@ export const IngredientDetails = (ingredient) => {
 }
 
 IngredientDetails.propTypes = {
-    ingredient: PropTypes.arrayOf(ingredientsPropTypes).isRequired,
+    ingredient: PropTypes.shape(ingredient).isRequired,
 };

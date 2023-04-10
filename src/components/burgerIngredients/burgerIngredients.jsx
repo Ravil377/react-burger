@@ -5,6 +5,7 @@ import PropTypes from 'prop-types';
 import { TabPanel } from './tabPanel/tabPanel';
 import { TabContent } from './tabContent/tabContent';
 import { IngredientList } from './ingredientList/ingredientList';
+import { filterByType } from '../../utils/utils';
 
 function BurgerIngredients({ingredients, selectIngredients, modalOpen, openIngredientInModal}) {
     const refs = [
@@ -13,8 +14,6 @@ function BurgerIngredients({ingredients, selectIngredients, modalOpen, openIngre
         useRef(null)
     ];
 
-    const filterByType = (type) => ingredients.filter(item => item.type === type);
-
     return (
         <section className={burgerIngredientsStyles.ingredients}>
             <TabPanel refs={refs} />
@@ -22,8 +21,8 @@ function BurgerIngredients({ingredients, selectIngredients, modalOpen, openIngre
                 <IngredientList 
                     type={"Булки"} 
                     refs={refs} 
-                    ingredients={filterByType('bun')} 
-                    id={0} 
+                    ingredients={filterByType('bun', ingredients)} 
+                    refId={0} 
                     selectIngredients={selectIngredients} 
                     modalOpen={modalOpen}
                     openIngredientInModal={openIngredientInModal}
@@ -31,8 +30,8 @@ function BurgerIngredients({ingredients, selectIngredients, modalOpen, openIngre
                 <IngredientList 
                     type={"Соусы"} 
                     refs={refs} 
-                    ingredients={filterByType('sauce')} 
-                    id={1} 
+                    ingredients={filterByType('sauce', ingredients)} 
+                    refId={1} 
                     selectIngredients={selectIngredients} 
                     modalOpen={modalOpen}
                     openIngredientInModal={openIngredientInModal}
@@ -40,8 +39,8 @@ function BurgerIngredients({ingredients, selectIngredients, modalOpen, openIngre
                 <IngredientList 
                     type={"Начинки"} 
                     refs={refs} 
-                    ingredients={filterByType('main')} 
-                    id={2} 
+                    ingredients={filterByType('main', ingredients)} 
+                    refId={2} 
                     selectIngredients={selectIngredients} 
                     modalOpen={modalOpen} 
                     openIngredientInModal={openIngredientInModal}
