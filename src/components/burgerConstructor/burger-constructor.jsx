@@ -1,11 +1,11 @@
 import { useContext, useEffect } from 'react';
-import burgerConstructorStyles from './burgerConstructor.module.css';
+import burgerConstructorStyles from './burger-constructor.module.css';
 import { Button, CurrencyIcon } from '@ya.praktikum/react-developer-burger-ui-components';
 import PropTypes from 'prop-types';
 import { Bun } from './bun/bun';
-import { ConstructorList } from './constructorList/constructorList';
+import { ConstructorList } from './constructorList/constructor-list';
 import { filterByType } from '../../utils/utils';
-import { IngredientContext } from '../../utils/ingredientContext';
+import { IngredientContext } from '../../utils/ingredient-context';
 import api from '../../utils/api';
 import { checkBun } from '../../utils/utils';
 

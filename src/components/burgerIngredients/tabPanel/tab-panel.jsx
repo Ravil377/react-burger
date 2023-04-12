@@ -1,7 +1,7 @@
 import React from 'react';
 import { Tab } from '@ya.praktikum/react-developer-burger-ui-components'
 import {TAB1, TAB2, TAB3} from '../../../utils/constants';
-import { refsPropTypes } from '../../../utils/propTypes';
+import { refsPropTypes } from '../../../utils/prop-types';
 import PropTypes from 'prop-types';
 
 export const TabPanel = (props) => {

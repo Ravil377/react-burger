@@ -1,9 +1,9 @@
 import { useContext } from 'react';
-import ingredientListStyles from './ingredientList.module.css';
-import { refsPropTypes } from '../../../utils/propTypes';
+import ingredientListStyles from './ingredient-list.module.css';
+import { refsPropTypes } from '../../../utils/prop-types';
 import PropTypes from 'prop-types';
-import { IngredientCard } from '../ingredientCard/ingredientCard';
-import { IngredientContext } from '../../../utils/ingredientContext';
+import { IngredientCard } from '../ingredientCard/ingredient-card';
+import { IngredientContext } from '../../../utils/ingredient-context';
 import { filterByType } from '../../../utils/utils';
 
 export const IngredientList = ({ refId, type, title, refs, modalOpen }) => {

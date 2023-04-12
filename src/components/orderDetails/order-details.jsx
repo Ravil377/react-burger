@@ -1,8 +1,8 @@
 import React, { useContext } from 'react';
-import orderDetailsStyles from './orderDetails.module.css';
+import orderDetailsStyles from './order-details.module.css';
 import { titleOrder, start, wait } from '../../utils/constants';
 import success from "../../images/success.svg";
-import { IngredientContext } from '../../utils/ingredientContext';
+import { IngredientContext } from '../../utils/ingredient-context';
 
 export const OrderDetails = () => {
 

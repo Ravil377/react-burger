@@ -1,16 +1,15 @@
 import React from "react";
-import './app.css';
 import { useState } from "react";
-import AppHeader from '../appHeader/appHeader';
+import AppHeader from '../appHeader/app-header';
 import Container from '../container/container';
-import BurgerIngredients from '../burgerIngredients/burgerIngredients';
-import BurgerConstructor from '../burgerConstructor/burgerConstructor';
+import BurgerIngredients from '../burgerIngredients/burger-ingredients';
+import BurgerConstructor from '../burgerConstructor/burger-constructor';
 import api from '../../utils/api';
 import { Modal } from '../modal/modal';
-import { IngredientDetails } from '../ingredientDetails/ingredientDetails';
-import { OrderDetails } from '../orderDetails/orderDetails';
-import { IngredientContext } from '../../utils/ingredientContext';
-import PropTypes from 'prop-types';
+import { IngredientDetails } from '../ingredientDetails/ingredient-details';
+import { OrderDetails } from '../orderDetails/order-details';
+import { IngredientContext } from '../../utils/ingredient-context';
+import appStyles from './app.module.css';
 
 export function App() {
   const [showModal, setShowModal] = useState(false);
@@ -43,43 +42,30 @@ export function App() {
   }, []);
 
   return (
-      <IngredientContext.Provider value={{ ingredients: ingredients ? ingredients : {}, setIngredients }}>
+      <IngredientContext.Provider value={{ ingredients, setIngredients }}>
         <AppHeader />
         <main>
           <Container >
-            <div className='main pt-10 text pl-5 pr-5'>
-              <h1>Соберите бургер</h1>
+            <div className={`${appStyles.main} pt-10 text pl-5 pr-5`}>
+              <h1 className={appStyles.h1}>Соберите бургер</h1>
               {(!ingredients.isLoading && !ingredients.isError && ingredients.data.length) 
               ? <>
-                  <BurgerIngredients 
-                      modalOpen={modalOpen}
-                  />
-                  <BurgerConstructor 
-                    modalOpen={modalOpen}
-                  />
+                  <BurgerIngredients modalOpen={modalOpen} />
+                  <BurgerConstructor modalOpen={modalOpen} />
                 </>
               : ''
               }
             </div>
           </Container>
           {showModal &&
-            <>
-              <Modal showModal={showModal} modalClose={modalClose} >
-                {ingredients.ingredientForModal 
-                  ? <IngredientDetails />
-                  : <OrderDetails />
-                }
-              </Modal>
-            </>
+            <Modal showModal={showModal} modalClose={modalClose} >
+              {ingredients.ingredientForModal 
+                ? <IngredientDetails />
+                : <OrderDetails />
+              }
+            </Modal>
           }
         </main>
       </IngredientContext.Provider>
   );
 }
-
-IngredientContext.propTypes = {
-  value: PropTypes.shape({
-    ingredients: IngredientContext.propTypes.ingredients.isRequired,
-    setIngredients: IngredientContext.propTypes.setIngredients.isRequired,
-  }).isRequired,
-};

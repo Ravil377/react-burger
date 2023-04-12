@@ -1,9 +1,9 @@
-import React, { useCallback, useContext } from 'react';
-import ingredientCardStyles from './ingredientCard.module.css';
+import { useCallback, useContext } from 'react';
+import ingredientCardStyles from './ingredient-card.module.css';
 import { CurrencyIcon, Counter } from '@ya.praktikum/react-developer-burger-ui-components'
-import { ingredient } from '../../../utils/propTypes';
+import { ingredient } from '../../../utils/prop-types';
 import PropTypes from 'prop-types';
-import { IngredientContext } from '../../../utils/ingredientContext';
+import { IngredientContext } from '../../../utils/ingredient-context';
 import { filterById } from '../../../utils/utils';
 import { checkBun } from '../../../utils/utils';
 

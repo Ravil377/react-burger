@@ -1,7 +1,7 @@
 import { useContext } from 'react';
-import constructorListStyles from './constructorList.module.css';
+import constructorListStyles from './constructor-list.module.css';
 import { ConstructorElement, DragIcon } from '@ya.praktikum/react-developer-burger-ui-components';
-import { IngredientContext } from '../../../utils/ingredientContext';
+import { IngredientContext } from '../../../utils/ingredient-context';
 
 export const ConstructorList = () => {
     

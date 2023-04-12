@@ -13,20 +13,18 @@ class Api {
         return Promise.reject(`Ошибка: ${res.status}`);
     }
 
-    getInitialIngredients () {
-        return fetch(`${this._options.baseUrl}/ingredients`, {
-        }).then((res) => this._answerForServer(res));
+    _request(url, options) {
+        return fetch(url, options).then(this._answerForServer)
     }
 
-    postOrder (ingredients) {
-        return fetch(`${this._options.baseUrl}/orders`, {
+    getInitialIngredients = () => this._request(`${this._options.baseUrl}/ingredients`, {})
+
+    postOrder = (ingredients) => this._request(`${this._options.baseUrl}/orders`, 
+        {
             method: "POST",
-            headers: {
-                "Content-Type": "application/json",
-            },
+            headers: { "Content-Type": "application/json" },
             body: JSON.stringify({ ingredients }),
-        }).then((res) => this._answerForServer(res));
-    }
+        })
 }
 
 const apiOptions = {

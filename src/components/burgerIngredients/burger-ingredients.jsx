@@ -1,9 +1,9 @@
 import { useRef } from 'react';
-import burgerIngredientsStyles from './burgerIngredients.module.css';
+import burgerIngredientsStyles from './burger-ingredients.module.css';
 import PropTypes from 'prop-types';
-import { TabPanel } from './tabPanel/tabPanel';
-import { TabContent } from './tabContent/tabContent';
-import { IngredientList } from './ingredientList/ingredientList';
+import { TabPanel } from './tabPanel/tab-panel';
+import { TabContent } from './tabContent/tab-content';
+import { IngredientList } from './ingredientList/ingredient-list';
 
 function BurgerIngredients({ modalOpen }) {
     const refs = [

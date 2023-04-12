@@ -1,5 +1,5 @@
 import { ConstructorElement } from '@ya.praktikum/react-developer-burger-ui-components';
-import { ingredientsPropTypes } from '../../../utils/propTypes';
+import { ingredientsPropTypes } from '../../../utils/prop-types';
 import PropTypes from 'prop-types';
 import bunStyles from './bun.module.css';
 

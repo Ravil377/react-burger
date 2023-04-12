@@ -1,4 +1,4 @@
-import tabContentStyles from './tabContent.module.css';
+import tabContentStyles from './tab-content.module.css';
 import PropTypes from 'prop-types';
 
 export const TabContent = (props) => {
