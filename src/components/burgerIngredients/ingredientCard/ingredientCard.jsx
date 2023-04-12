@@ -1,15 +1,37 @@
+import React, { useCallback, useContext, useRef } from 'react';
 import ingredientCardStyles from './ingredientCard.module.css';
 import { CurrencyIcon, Counter } from '@ya.praktikum/react-developer-burger-ui-components'
 import { ingredient } from '../../../utils/propTypes';
 import PropTypes from 'prop-types';
+import { IngredientContext } from '../../../utils/ingredientContext';
+import { filterById } from '../../../utils/utils';
+import { checkBun } from '../../../utils/utils';
 
+export const IngredientCard = ({ ingredient, count, modalOpen }) => {
 
-export const IngredientCard = ({ ingredient, count, modalOpen, openIngredientInModal }) => {
-    
-    const handleIngredientClick = (e) => {
+    const { ingredients, setIngredients } = useContext(IngredientContext); 
+
+    const handleIngredientClick = useCallback((e) => {
+        const id = e.currentTarget.id;
         modalOpen();
-        openIngredientInModal(e.currentTarget.id);
-    }
+        setIngredients(prevState => {
+            let updateSelectIngredients;
+            const newIngredient = filterById(id, ingredients.data);
+            const isBun = filterById(id, ingredients.data).type === "bun";
+            const isBunPrevState = checkBun(prevState.selectIngredients);
+            if( isBun && isBunPrevState != -1 ) {
+                updateSelectIngredients = [...prevState.selectIngredients];
+                updateSelectIngredients[isBunPrevState] = newIngredient;
+            }
+            return {
+                ...prevState,
+                selectIngredients: ((isBun && isBunPrevState === -1) || !isBun) 
+                    ? [...prevState.selectIngredients, newIngredient] 
+                    : updateSelectIngredients,
+                ingredientForModal: newIngredient
+            }
+        })
+    }, [modalOpen, setIngredients, ingredients.data]);
 
     return (
         <li className={`pl-4 pr-4 ${ingredientCardStyles.ingredient}`} onClick={handleIngredientClick} id={ingredient._id} >

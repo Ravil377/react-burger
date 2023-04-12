@@ -1,11 +1,14 @@
+import React, { useCallback, useContext, useRef } from 'react';
 import ingredientDetailStyles from './ingredientDetails.module.css';
 import { titleDetail, caloriesDetail, proteinDetail, fatDetail, carbohydratesDetail } from '../../utils/constants';
 import { ingredient } from '../../utils/propTypes';
 import PropTypes from 'prop-types';
+import { IngredientContext } from '../../utils/ingredientContext';
 
-export const IngredientDetails = (ingredient) => {
-    const {image, name, calories, proteins, fat, carbohydrates} = ingredient.ingredient;
-
+export const IngredientDetails = () => {
+    const { ingredients, setIngredients } = useContext(IngredientContext); 
+    const {image, name, calories, proteins, fat, carbohydrates} = ingredients.ingredientForModal;
+    
     return (
         <>
             <div className={ingredientDetailStyles.container}>

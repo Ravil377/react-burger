@@ -9,31 +9,33 @@ import api from '../../utils/api';
 import { Modal } from '../modal/modal';
 import { IngredientDetails } from '../ingredientDetails/ingredientDetails';
 import { OrderDetails } from '../orderDetails/orderDetails';
-
+import { IngredientContext } from '../../utils/ingredientContext';
 
 export function App() {
-  const [selectIngredient, setSelectIngredient] = useState([]);
-  const [selectIngredientForModal, setSelectIngredientForModal] = useState(null);
   const [showModal, setShowModal] = useState(false);
 
   const [ingredients, setIngredients] = useState({
     isLoading: false,
     isError: false,
     textError: '',
-    data: []
+    data: [],
+    selectIngredients: [],
+    order: 0,
+    postOrder: null,
+    ingredientForModal: null
   })
   
   const modalOpen = () => setShowModal(true);
 
   const modalClose = () => {
     setShowModal(false);
-    setSelectIngredientForModal(null);
+    setIngredients({...ingredients, ingredientForModal: null})
   }
 
-  const openIngredientInModal = (id) => {
-    const ingredient = ingredients.data.find(ingredient => ingredient._id === id);
-    setSelectIngredientForModal(ingredient);
-  }
+  // const openIngredientInModal = (id) => {
+  //   const ingredient = ingredients.data.find(ingredient => ingredient._id === id);
+  //   setSelectIngredientForModal(ingredient);
+  // }
 
   React.useEffect(() => {
     setIngredients({ ...ingredients, isLoading: true, isError: false, textError: '' });
@@ -45,41 +47,36 @@ export function App() {
   }, []);
 
   return (
-    <>
-      <AppHeader />
-      <main>
-        <Container >
-          <div className='main pt-10 text pl-5 pr-5'>
-            <h1>Соберите бургер</h1>
-            {(!ingredients.isLoading && !ingredients.isError && ingredients.data.length) 
-            ? <>
-                <BurgerIngredients 
-                    ingredients={ingredients.data} 
-                    selectIngredients={selectIngredient} 
+      <IngredientContext.Provider value={{ingredients, setIngredients}}>
+        <AppHeader />
+        <main>
+          <Container >
+            <div className='main pt-10 text pl-5 pr-5'>
+              <h1>Соберите бургер</h1>
+              {(!ingredients.isLoading && !ingredients.isError && ingredients.data.length) 
+              ? <>
+                  <BurgerIngredients 
+                      modalOpen={modalOpen}
+                  />
+                  <BurgerConstructor 
                     modalOpen={modalOpen}
-                    openIngredientInModal={openIngredientInModal}
-                />
-                <BurgerConstructor 
-                  ingredients={ingredients.data} 
-                  selectIngredients={selectIngredient}
-                  modalOpen={modalOpen}
-                />
-              </>
-            : ''
-            }
-          </div>
-        </Container>
-        {showModal &&
-          <>
-            <Modal showModal={showModal} modalClose={modalClose} >
-              {selectIngredientForModal 
-                ? <IngredientDetails ingredient={selectIngredientForModal} />
-                : <OrderDetails />
+                  />
+                </>
+              : ''
               }
-            </Modal>
-          </>
-        }
-      </main>
-    </>
+            </div>
+          </Container>
+          {showModal &&
+            <>
+              <Modal showModal={showModal} modalClose={modalClose} >
+                {ingredients.ingredientForModal 
+                  ? <IngredientDetails />
+                  : <OrderDetails />
+                }
+              </Modal>
+            </>
+          }
+        </main>
+      </IngredientContext.Provider>
   );
 }

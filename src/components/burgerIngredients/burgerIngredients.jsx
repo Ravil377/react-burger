@@ -1,13 +1,12 @@
-import { useRef } from 'react';
+import React, { useContext, useRef } from 'react';
 import burgerIngredientsStyles from './burgerIngredients.module.css';
 import { ingredientsPropTypes, selectIngredientsPropTypes } from '../../utils/propTypes';
 import PropTypes from 'prop-types';
 import { TabPanel } from './tabPanel/tabPanel';
 import { TabContent } from './tabContent/tabContent';
 import { IngredientList } from './ingredientList/ingredientList';
-import { filterByType } from '../../utils/utils';
 
-function BurgerIngredients({ingredients, selectIngredients, modalOpen, openIngredientInModal}) {
+function BurgerIngredients({ modalOpen, openIngredientInModal }) {
     const refs = [
         useRef(null),
         useRef(null),
@@ -19,31 +18,28 @@ function BurgerIngredients({ingredients, selectIngredients, modalOpen, openIngre
             <TabPanel refs={refs} />
             <TabContent >
                 <IngredientList 
-                    type={"Булки"} 
-                    refs={refs} 
-                    ingredients={filterByType('bun', ingredients)} 
+                    title={"Булки"} 
+                    refs={refs}
+                    type={"bun"}
                     refId={0} 
-                    selectIngredients={selectIngredients} 
                     modalOpen={modalOpen}
-                    openIngredientInModal={openIngredientInModal}
+                    // openIngredientInModal={openIngredientInModal}
                 />
                 <IngredientList 
-                    type={"Соусы"} 
+                    title={"Соусы"} 
                     refs={refs} 
-                    ingredients={filterByType('sauce', ingredients)} 
+                    type={"sauce"}
                     refId={1} 
-                    selectIngredients={selectIngredients} 
                     modalOpen={modalOpen}
-                    openIngredientInModal={openIngredientInModal}
+                    // openIngredientInModal={openIngredientInModal}
                 />
                 <IngredientList 
-                    type={"Начинки"} 
+                    title={"Начинки"} 
+                    type={"main"}
                     refs={refs} 
-                    ingredients={filterByType('main', ingredients)} 
                     refId={2} 
-                    selectIngredients={selectIngredients} 
                     modalOpen={modalOpen} 
-                    openIngredientInModal={openIngredientInModal}
+                    // openIngredientInModal={openIngredientInModal}
                 />
             </TabContent>
         </section>

@@ -2,7 +2,9 @@
     display: flex;
     align-items: center;
     column-gap: 8px;
-    justify-content: space-between;
+    justify-content: flex-end;
+    position: initial;
+    right: 11px;
 }
 .button {
     outline: none;

@@ -14,10 +14,19 @@ class Api {
     }
 
     getInitialIngredients () {
-        return fetch(`${this._options.baseUrl}`, {
+        return fetch(`${this._options.baseUrl}/ingredients`, {
         }).then((res) => this._answerForServer(res));
     }
 
+    postOrder (ingredients) {
+        return fetch(`${this._options.baseUrl}/orders`, {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify({ ingredients }),
+        }).then((res) => this._answerForServer(res));
+    }
 }
 
 const apiOptions = {
