@@ -1,0 +1,1 @@
+export const filterByType = (type, ingredients) => ingredients.filter(item => item.type === type);

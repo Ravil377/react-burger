@@ -1,0 +1,10 @@
+.outer {
+	padding-left: 24px;
+	padding-right: 24px;
+}
+	
+.inner {
+	max-width: 1280px;
+	margin-left: auto;
+	margin-right: auto;
+}
