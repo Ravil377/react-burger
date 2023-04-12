@@ -1,12 +1,11 @@
-import React, { useContext, useRef } from 'react';
+import { useRef } from 'react';
 import burgerIngredientsStyles from './burgerIngredients.module.css';
-import { ingredientsPropTypes, selectIngredientsPropTypes } from '../../utils/propTypes';
 import PropTypes from 'prop-types';
 import { TabPanel } from './tabPanel/tabPanel';
 import { TabContent } from './tabContent/tabContent';
 import { IngredientList } from './ingredientList/ingredientList';
 
-function BurgerIngredients({ modalOpen, openIngredientInModal }) {
+function BurgerIngredients({ modalOpen }) {
     const refs = [
         useRef(null),
         useRef(null),
@@ -23,7 +22,6 @@ function BurgerIngredients({ modalOpen, openIngredientInModal }) {
                     type={"bun"}
                     refId={0} 
                     modalOpen={modalOpen}
-                    // openIngredientInModal={openIngredientInModal}
                 />
                 <IngredientList 
                     title={"Соусы"} 
@@ -31,7 +29,6 @@ function BurgerIngredients({ modalOpen, openIngredientInModal }) {
                     type={"sauce"}
                     refId={1} 
                     modalOpen={modalOpen}
-                    // openIngredientInModal={openIngredientInModal}
                 />
                 <IngredientList 
                     title={"Начинки"} 
@@ -39,7 +36,6 @@ function BurgerIngredients({ modalOpen, openIngredientInModal }) {
                     refs={refs} 
                     refId={2} 
                     modalOpen={modalOpen} 
-                    // openIngredientInModal={openIngredientInModal}
                 />
             </TabContent>
         </section>
@@ -47,9 +43,6 @@ function BurgerIngredients({ modalOpen, openIngredientInModal }) {
 }
 
 BurgerIngredients.propTypes = {
-    ingredients: PropTypes.arrayOf(ingredientsPropTypes).isRequired,
-    selectIngredients: PropTypes.arrayOf(selectIngredientsPropTypes).isRequired,
-    openIngredientInModal: PropTypes.func.isRequired,
     modalOpen: PropTypes.func.isRequired,
 };
 

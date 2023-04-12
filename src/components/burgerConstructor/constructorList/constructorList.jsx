@@ -1,8 +1,6 @@
-import React, { useContext, useRef } from 'react';
+import { useContext } from 'react';
 import constructorListStyles from './constructorList.module.css';
 import { ConstructorElement, DragIcon } from '@ya.praktikum/react-developer-burger-ui-components';
-import { ingredientsPropTypes } from '../../../utils/propTypes';
-import PropTypes from 'prop-types';
 import { IngredientContext } from '../../../utils/ingredientContext';
 
 export const ConstructorList = () => {
@@ -11,7 +9,7 @@ export const ConstructorList = () => {
     
     return (
         <>
-        {ingredients.selectIngredients.map(component => component.type != "bun" &&
+        {ingredients.selectIngredients.map(component => component.type !== "bun" &&
             (<div className={constructorListStyles.ingredients} key={`${component._id}-${Math.random()}`}>
                 <button className={constructorListStyles.button}>
                     <DragIcon type="primary" />
@@ -27,6 +25,3 @@ export const ConstructorList = () => {
     )
 }
 
-ConstructorList.propTypes = {
-    ingredients: PropTypes.arrayOf(ingredientsPropTypes).isRequired,
-};

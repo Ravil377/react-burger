@@ -1,8 +1,6 @@
-import React, { useCallback, useContext, useRef } from 'react';
+import { useContext } from 'react';
 import ingredientDetailStyles from './ingredientDetails.module.css';
 import { titleDetail, caloriesDetail, proteinDetail, fatDetail, carbohydratesDetail } from '../../utils/constants';
-import { ingredient } from '../../utils/propTypes';
-import PropTypes from 'prop-types';
 import { IngredientContext } from '../../utils/ingredientContext';
 
 export const IngredientDetails = () => {
@@ -25,7 +23,3 @@ export const IngredientDetails = () => {
         </>
     );
 }
-
-IngredientDetails.propTypes = {
-    ingredient: PropTypes.shape(ingredient).isRequired,
-};

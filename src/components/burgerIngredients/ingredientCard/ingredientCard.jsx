@@ -1,4 +1,4 @@
-import React, { useCallback, useContext, useRef } from 'react';
+import React, { useCallback, useContext } from 'react';
 import ingredientCardStyles from './ingredientCard.module.css';
 import { CurrencyIcon, Counter } from '@ya.praktikum/react-developer-burger-ui-components'
 import { ingredient } from '../../../utils/propTypes';
@@ -19,7 +19,7 @@ export const IngredientCard = ({ ingredient, count, modalOpen }) => {
             const newIngredient = filterById(id, ingredients.data);
             const isBun = filterById(id, ingredients.data).type === "bun";
             const isBunPrevState = checkBun(prevState.selectIngredients);
-            if( isBun && isBunPrevState != -1 ) {
+            if( isBun && isBunPrevState !== -1 ) {
                 updateSelectIngredients = [...prevState.selectIngredients];
                 updateSelectIngredients[isBunPrevState] = newIngredient;
             }
@@ -47,7 +47,6 @@ IngredientCard.propTypes = {
     ingredient: PropTypes.shape(ingredient).isRequired,
     count: PropTypes.number.isRequired,
     modalOpen: PropTypes.func.isRequired,
-    openIngredientInModal: PropTypes.func.isRequired,
 };
 
 

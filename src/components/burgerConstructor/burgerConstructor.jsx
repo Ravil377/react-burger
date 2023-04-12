@@ -1,7 +1,6 @@
-import React, { useContext, useRef, useEffect } from 'react';
+import { useContext, useEffect } from 'react';
 import burgerConstructorStyles from './burgerConstructor.module.css';
 import { Button, CurrencyIcon } from '@ya.praktikum/react-developer-burger-ui-components';
-import { ingredientsPropTypes, selectIngredientsPropTypes } from '../../utils/propTypes';
 import PropTypes from 'prop-types';
 import { Bun } from './bun/bun';
 import { ConstructorList } from './constructorList/constructorList';
@@ -11,8 +10,6 @@ import api from '../../utils/api';
 import { checkBun } from '../../utils/utils';
 
 BurgerConstructor.propTypes = {
-    ingredients: PropTypes.arrayOf(ingredientsPropTypes).isRequired,
-    selectIngredients: PropTypes.arrayOf(selectIngredientsPropTypes).isRequired,
     modalOpen: PropTypes.func.isRequired,
 };
  
@@ -40,11 +37,11 @@ function BurgerConstructor({ modalOpen }) {
 
     return (
         <section className={`custom-scroll ${burgerConstructorStyles.constructor}`} >
-            {checkBun(ingredients.selectIngredients) != -1 && <Bun bun={filterByType('bun', ingredients.selectIngredients)} positionText="(верх)" position={"top"} />}
+            {checkBun(ingredients.selectIngredients) !== -1 && <Bun bun={filterByType('bun', ingredients.selectIngredients)} positionText="(верх)" position={"top"} />}
             <div className={`custom-scroll mt-4 mb-4 pr-4 ${burgerConstructorStyles.list}`} >
             {ingredients.selectIngredients && <ConstructorList />}
             </div>            
-            {checkBun(ingredients.selectIngredients) != -1 && <Bun bun={filterByType('bun', ingredients.selectIngredients)} positionText="(низ)" position={"bottom"} />}
+            {checkBun(ingredients.selectIngredients) !== -1 && <Bun bun={filterByType('bun', ingredients.selectIngredients)} positionText="(низ)" position={"bottom"} />}
             <div className={`mt-10 ${burgerConstructorStyles.buttons}`}>
                 <p className={`text text_type_digits-medium ${burgerConstructorStyles.result}`}>{ingredients.order} 
                     <CurrencyIcon type="primary" />

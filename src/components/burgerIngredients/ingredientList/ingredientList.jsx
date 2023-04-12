@@ -1,12 +1,12 @@
-import React, { useContext } from 'react';
+import { useContext } from 'react';
 import ingredientListStyles from './ingredientList.module.css';
-import { ingredientsPropTypes, selectIngredientsPropTypes, refsPropTypes } from '../../../utils/propTypes';
+import { refsPropTypes } from '../../../utils/propTypes';
 import PropTypes from 'prop-types';
 import { IngredientCard } from '../ingredientCard/ingredientCard';
 import { IngredientContext } from '../../../utils/ingredientContext';
 import { filterByType } from '../../../utils/utils';
 
-export const IngredientList = ({ refId, type, title, refs, modalOpen, openIngredientInModal }) => {
+export const IngredientList = ({ refId, type, title, refs, modalOpen }) => {
     
     const { ingredients, setIngredients } = useContext(IngredientContext); 
     
@@ -26,7 +26,6 @@ export const IngredientList = ({ refId, type, title, refs, modalOpen, openIngred
                         ingredient={item}
                         count={isSelected(item._id)}
                         modalOpen={modalOpen}
-                        // openIngredientInModal={openIngredientInModal}
                     />
                 )}
             </ul>
@@ -34,11 +33,9 @@ export const IngredientList = ({ refId, type, title, refs, modalOpen, openIngred
     )
 }
 IngredientList.propTypes = {
+    title: PropTypes.string.isRequired,
     type: PropTypes.string.isRequired,
-    ingredients: PropTypes.arrayOf(ingredientsPropTypes).isRequired,
     refId: PropTypes.number.isRequired,
-    selectIngredients: PropTypes.arrayOf(selectIngredientsPropTypes).isRequired,
     refs: PropTypes.arrayOf(refsPropTypes).isRequired,
-    openIngredientInModal: PropTypes.func.isRequired,
     modalOpen: PropTypes.func.isRequired,
 };

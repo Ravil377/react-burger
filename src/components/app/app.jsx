@@ -10,6 +10,7 @@ import { Modal } from '../modal/modal';
 import { IngredientDetails } from '../ingredientDetails/ingredientDetails';
 import { OrderDetails } from '../orderDetails/orderDetails';
 import { IngredientContext } from '../../utils/ingredientContext';
+import PropTypes from 'prop-types';
 
 export function App() {
   const [showModal, setShowModal] = useState(false);
@@ -32,11 +33,6 @@ export function App() {
     setIngredients({...ingredients, ingredientForModal: null})
   }
 
-  // const openIngredientInModal = (id) => {
-  //   const ingredient = ingredients.data.find(ingredient => ingredient._id === id);
-  //   setSelectIngredientForModal(ingredient);
-  // }
-
   React.useEffect(() => {
     setIngredients({ ...ingredients, isLoading: true, isError: false, textError: '' });
     api.getInitialIngredients()
@@ -47,7 +43,7 @@ export function App() {
   }, []);
 
   return (
-      <IngredientContext.Provider value={{ingredients, setIngredients}}>
+      <IngredientContext.Provider value={{ ingredients: ingredients ? ingredients : {}, setIngredients }}>
         <AppHeader />
         <main>
           <Container >
@@ -80,3 +76,10 @@ export function App() {
       </IngredientContext.Provider>
   );
 }
+
+IngredientContext.propTypes = {
+  value: PropTypes.shape({
+    ingredients: IngredientContext.propTypes.ingredients.isRequired,
+    setIngredients: IngredientContext.propTypes.setIngredients.isRequired,
+  }).isRequired,
+};
