@@ -1,6 +1,6 @@
 import headerStyles from './app-header.module.css';
 import Container from '../container/container';
-import { Button, Box, BurgerIcon, ListIcon, Logo, ProfileIcon } from '@ya.praktikum/react-developer-burger-ui-components'
+import { Button, BurgerIcon, ListIcon, Logo, ProfileIcon } from '@ya.praktikum/react-developer-burger-ui-components'
 import {CONSTRUCTOR, ORDERS, PERSONAL} from '../../utils/constants';
 
 

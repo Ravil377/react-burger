@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 
 export const TabContent = (props) => {
     return (
-        <div className={`custom-scroll ${tabContentStyles.content}`}>
+        <div className={`custom-scroll ${tabContentStyles.content}`} ref={props.containerRef}>
             {props.children}
         </div>
     )

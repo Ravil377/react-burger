@@ -3,39 +3,28 @@ import ingredientCardStyles from './ingredient-card.module.css';
 import { CurrencyIcon, Counter } from '@ya.praktikum/react-developer-burger-ui-components'
 import { ingredient } from '../../../utils/prop-types';
 import PropTypes from 'prop-types';
-import { IngredientContext } from '../../../utils/ingredient-context';
 import { filterById } from '../../../utils/utils';
-import { checkBun } from '../../../utils/utils';
+import { useSelector, useDispatch } from 'react-redux';
+import { ADD_INGREDIENT_FOR_DETAIL } from '../../../services/actions/ingredient-details';
+import { useDrag } from "react-dnd";
 
-export const IngredientCard = ({ ingredient, count, modalOpen }) => {
-
-    const { ingredients, setIngredients } = useContext(IngredientContext); 
+export const IngredientCard = ({ ingredient }) => {
+    const dispatch = useDispatch();
+    const { ingredients } = useSelector(state => state.ingredients);
+    const [, dragRef] = useDrag({
+        type: "ingredient",
+        item: ingredient
+    });
 
     const handleIngredientClick = useCallback((e) => {
         const id = e.currentTarget.id;
-        modalOpen();
-        setIngredients(prevState => {
-            let updateSelectIngredients;
-            const newIngredient = filterById(id, ingredients.data);
-            const isBun = filterById(id, ingredients.data).type === "bun";
-            const isBunPrevState = checkBun(prevState.selectIngredients);
-            if( isBun && isBunPrevState !== -1 ) {
-                updateSelectIngredients = [...prevState.selectIngredients];
-                updateSelectIngredients[isBunPrevState] = newIngredient;
-            }
-            return {
-                ...prevState,
-                selectIngredients: ((isBun && isBunPrevState === -1) || !isBun) 
-                    ? [...prevState.selectIngredients, newIngredient] 
-                    : updateSelectIngredients,
-                ingredientForModal: newIngredient
-            }
-        })
-    }, [modalOpen, setIngredients, ingredients.data]);
+        const newIngredient = filterById(id, ingredients);
+        dispatch({ type: ADD_INGREDIENT_FOR_DETAIL, ingredient: {...newIngredient} });
+    }, [dispatch]);
 
     return (
-        <li className={`pl-4 pr-4 ${ingredientCardStyles.ingredient}`} onClick={handleIngredientClick} id={ingredient._id} >
-            {count > 0 && <Counter count={count} size="default" extraClass="m-1" />}
+        <li className={`pl-4 pr-4 ${ingredientCardStyles.ingredient}`} ref={dragRef} onClick={handleIngredientClick} id={ingredient._id} >
+            {(ingredient.count !=0 && ingredient.count) && <Counter count={ingredient.count} size="default" extraClass="m-1" />}
             <img src={ingredient.image} alt={ingredient.name} />
             <p className={`text text_type_digits-default ${ingredientCardStyles.price}`}>{ingredient.price}<CurrencyIcon type="primary" /></p>
             <p className={`text text_type_main-small ${ingredientCardStyles.name}`}>{ingredient.name}</p>
@@ -44,9 +33,7 @@ export const IngredientCard = ({ ingredient, count, modalOpen }) => {
 }
 
 IngredientCard.propTypes = {
-    ingredient: PropTypes.shape(ingredient).isRequired,
-    count: PropTypes.number.isRequired,
-    modalOpen: PropTypes.func.isRequired,
+    ingredient: PropTypes.shape(ingredient).isRequired
 };
 
 

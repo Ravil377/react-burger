@@ -1,12 +1,11 @@
-import { useContext } from 'react';
 import ingredientDetailStyles from './ingredient-details.module.css';
 import { titleDetail, caloriesDetail, proteinDetail, fatDetail, carbohydratesDetail } from '../../utils/constants';
-import { IngredientContext } from '../../utils/ingredient-context';
+import { useSelector } from 'react-redux';
 
-export const IngredientDetails = () => {
-    const { ingredients, setIngredients } = useContext(IngredientContext); 
-    const {image, name, calories, proteins, fat, carbohydrates} = ingredients.ingredientForModal;
-    
+export const IngredientDetails = () => {   
+    const { ingredientDetail } = useSelector( state => ({ ingredientDetail: state.ingredientDetail.selectIngredientForDetail }) );
+    const { image, name, calories, proteins, fat, carbohydrates } = ingredientDetail;
+
     return (
         <div className={ingredientDetailStyles.container}>
             <h2 className={`${ingredientDetailStyles.title} text text_type_main-large`}>{titleDetail}</h2>

@@ -1,26 +1,16 @@
-import { useContext } from 'react';
-import constructorListStyles from './constructor-list.module.css';
-import { ConstructorElement, DragIcon } from '@ya.praktikum/react-developer-burger-ui-components';
-import { IngredientContext } from '../../../utils/ingredient-context';
+import { useSelector } from 'react-redux';
+import { ConstructorIngredient } from '../constructor-ingredient/constructor-ingredient';
 
 export const ConstructorList = () => {
-    
-    const { ingredients, setIngredients } = useContext(IngredientContext);  
+    const { selectIngredients } = useSelector(state => ({
+        selectIngredients: state.selectIngredients.selectIngredients
+    }));  
     
     return (
         <>
-        {ingredients.selectIngredients.map(component => component.type !== "bun" &&
-            (<div className={constructorListStyles.ingredients} key={`${component._id}-${Math.random()}`}>
-                <button className={constructorListStyles.button}>
-                    <DragIcon type="primary" />
-                </button>
-                <ConstructorElement
-                    text={component.name}
-                    price={component.price}
-                    thumbnail={component.image}
-                />
-            </div>)
-        )}        
+            {selectIngredients.map((component, idx) => component.type !== "bun" &&
+                <ConstructorIngredient component={component} index={idx} key={component.key}/>
+            )}        
         </>
     )
 }
