@@ -6,7 +6,7 @@ import { INGREDIENT_DECREMENT } from '../../../services/actions/ingredients';
 import { useDrag, useDrop } from "react-dnd";
 import { useRef } from 'react'
 import PropTypes from 'prop-types';
-import { ingredientsPropTypes } from '../../../utils/prop-types';
+import { ingredient } from '../../../utils/prop-types';
 
 const style = {
     cursor: 'move',
@@ -86,6 +86,6 @@ export const ConstructorIngredient = ({ component, index }) => {
 }
 
 ConstructorIngredient.propTypes = {
-  component: PropTypes.arrayOf(ingredientsPropTypes).isRequired,
+  component: PropTypes.shape(ingredient).isRequired,
   index: PropTypes.number.isRequired
 };
