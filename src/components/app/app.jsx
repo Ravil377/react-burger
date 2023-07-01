@@ -15,10 +15,9 @@ import ForgotPassword from "../../pages/forgot-password";
 import ResetPassword from "../../pages/reset-password";
 import Profile from "../../pages/profile";
 import {OnlyAuth, OnlyUnAuth} from '../protectedRoute';
-import { useHistory } from 'react-router-dom';
 
 export function App() {
-  const { order, ingredients, isLoading, isError, ingredientDetail } = useSelector(
+  const { order, ingredientDetail } = useSelector(
     state => ({
       order: state.order.order,
       ingredients: state.ingredients.ingredients,

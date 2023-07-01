@@ -1,4 +1,3 @@
-import React from "react";
 import { url } from './constants'
 
 class Api {
@@ -67,6 +66,13 @@ class Api {
             method: "POST",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify({ password: password, email: email })
+        })
+    
+    logOut = (refreshToken) => this._request(`${this._options.baseUrl}/auth/logout`, 
+        {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ token: refreshToken })
         })
 }
 

@@ -10,7 +10,6 @@ export const getUser = () => {
   return (dispatch) => {
     return api.getUser(localStorage.getItem("accessToken"))
       .then((res) => {
-        console.log(res);
         dispatch({
           type: SET_USER,
           user: res.user
@@ -124,3 +123,26 @@ export function postLoginUser({ email, password }) {
       );
   };
 }
+
+export function logOutUser() {
+    return function (dispatch) {
+      dispatch({ type: POST_LOADING_REGISTER });
+      api.logOut(localStorage.getItem("refreshToken"))
+        .then(res => {
+          if (res && res.success) {
+            localStorage.removeItem("accessToken");
+            localStorage.removeItem("refreshToken");
+            dispatch({
+              type: POST_REGISTER_SUCCESS,
+              user: null
+            });
+          }
+        })
+        .catch(err =>
+          dispatch({
+            type: POST_REGISTER_FAILED,
+            err: err
+          })
+        );
+    };
+  }

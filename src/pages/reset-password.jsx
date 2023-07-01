@@ -1,8 +1,7 @@
 import formStyles from './css/form.module.css';
 import Container from '../components/container/container';
-import { EmailInput, PasswordInput, Button, Input } from '@ya.praktikum/react-developer-burger-ui-components'
-import { useRef, useState, useEffect } from 'react';
-import { BrowserRouter, Route, useNavigate, Link } from 'react-router-dom';
+import { PasswordInput, Button, Input } from '@ya.praktikum/react-developer-burger-ui-components'
+import { useNavigate, Link } from 'react-router-dom';
 import { resetPasswordUser } from '../services/actions/user';
 import { useSelector, useDispatch } from 'react-redux';
 import { Formik, Form } from 'formik';
@@ -11,7 +10,7 @@ import * as Yup from 'yup';
 
 function ResetPassword() {
     const dispatch = useDispatch();
-    const { isLoading, isSuccess, isError, textError } = useSelector(state => state.user);
+    const { isLoading } = useSelector(state => state.user);
     const navigate = useNavigate();
 
     const handleSubmit = (values) => {

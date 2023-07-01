@@ -1,15 +1,14 @@
 import formStyles from './css/form.module.css';
 import Container from '../components/container/container';
 import { EmailInput, PasswordInput, Button } from '@ya.praktikum/react-developer-burger-ui-components'
-import { useRef, useState, useEffect } from 'react';
-import { BrowserRouter, Route, Switch, Link } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import { Formik, Form } from 'formik';
 import * as Yup from 'yup';
 import { useSelector, useDispatch } from 'react-redux';
 import { postLoginUser } from '../services/actions/user';
 
 function Login() {
-    const { isLoading, isSuccess, isError, textError } = useSelector(state => state.user);
+    const { isLoading } = useSelector(state => state.user);
     const dispatch = useDispatch();
 
     const initialValues = {

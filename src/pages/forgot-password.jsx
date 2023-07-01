@@ -1,7 +1,6 @@
 import formStyles from './css/form.module.css';
 import Container from '../components/container/container';
 import { EmailInput, Button } from '@ya.praktikum/react-developer-burger-ui-components'
-import { useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { forgotPasswordUser } from '../services/actions/user';
 import { useSelector, useDispatch } from 'react-redux';
@@ -10,7 +9,7 @@ import * as Yup from 'yup';
 
 function ForgotPassword() {
     const dispatch = useDispatch();
-    const { isLoading, isSuccess, isError, textError } = useSelector(state => state.user);
+    const { isLoading } = useSelector(state => state.user);
     const navigate = useNavigate();
 
     const handleSubmit = (values) => {
