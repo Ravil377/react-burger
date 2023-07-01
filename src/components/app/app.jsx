@@ -5,7 +5,7 @@ import { IngredientDetails } from '../ingredientDetails/ingredient-details';
 import { OrderDetails } from '../orderDetails/order-details';
 import { useSelector, useDispatch } from 'react-redux';
 import { getIngredients } from '../../services/actions/ingredients';
-import { checkUserAuth } from '../../services/actions/user';
+import { checkUserAuth, getUser } from '../../services/actions/user';
 import { Routes, Route, useLocation } from 'react-router-dom';
 import Main from '../../pages/main';
 import Login from '../../pages/login';
@@ -26,10 +26,17 @@ export function App() {
   const dispatch = useDispatch();
   const location = useLocation();
   let state = location.state;
+
   React.useEffect(() => {
     dispatch(getIngredients());
-    dispatch(checkUserAuth());
+    if (localStorage.getItem("accessToken")) {
+      dispatch(getUser());
+    } else {
+      dispatch(checkUserAuth());
+    }
   }, [dispatch]);
+
+
 
   return (
       <>

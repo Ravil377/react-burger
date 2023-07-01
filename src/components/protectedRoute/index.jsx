@@ -5,6 +5,7 @@ const ProtectedRoute = ({ onlyAuth=false, component }) => {
     const isAuthChecked = useSelector( state => state.user.isAuthCheck  );
     const user = useSelector( state => state.user.user );
     const location = useLocation();
+
     if(!isAuthChecked) { return null; }
 
     if (onlyAuth && user) {

@@ -1,26 +1,39 @@
 import profileStyles from './css/profile.module.css';
 import Container from '../components/container/container';
-import { EmailInput, PasswordInput, Input } from '@ya.praktikum/react-developer-burger-ui-components'
-import { useState } from 'react';
+import { EmailInput, PasswordInput, Input, Button } from '@ya.praktikum/react-developer-burger-ui-components'
 import { useNavigate, NavLink } from 'react-router-dom';
-import { logOutUser } from '../services/actions/user';
-import { useDispatch } from 'react-redux';
+import { logOutUser, patchUser } from '../services/actions/user';
+import { useDispatch, useSelector } from 'react-redux';
+import { Formik, Form } from 'formik';
+import * as Yup from 'yup';
 
 function Profile() {
     const dispatch = useDispatch();
     const navigate = useNavigate();
-    const [email, setEmail] = useState('');
-    const [password, setPassword] = useState('');
-    const [name, setName] = useState('');
+    const user = useSelector( state => state.user.user );
 
-    const onChangeEmail = e => setEmail(e.target.value);
-    const onChangePassword = e => setPassword(e.target.value);
-    const onChangeName = e => setName(e.target.value);
+    const initialValues = {
+        email: user.email,
+        password: '',
+        name: user.name
+    };
+
+    const validationSchema = Yup.object().shape({
+        email: Yup.string()
+            .email('Введите корректный email')
+            .required('Введите email'),
+        password: Yup.string()
+            .required('Введите пароль'),
+        name: Yup.string()
+            .required('Введите имя'),
+    });
 
     const onClick = () => {
         dispatch(logOutUser());
         navigate('/login');
     }
+
+    const handleSubmit = (values) => dispatch(patchUser(values));
 
     return (
         <Container >
@@ -44,9 +57,51 @@ function Profile() {
                     </ul>
                     <div className={profileStyles.menu__content}>
                         <div className={profileStyles.profile}>
-                            <Input placeholder="Имя" value={name} onChange={onChangeName} icon="EditIcon"/>
-                            <EmailInput placeholder="Логин" value={email} onChange={onChangeEmail} extraClass="mt-6" icon="EditIcon"/>
-                            <PasswordInput placeholder="Пароль" extraClass="mt-6 mb-6" value={password} onChange={onChangePassword} icon="EditIcon"/>
+                            <Formik 
+                                initialValues={initialValues} 
+                                onSubmit={(values)=>handleSubmit(values)}
+                                validationSchema={validationSchema}>
+                                {({ values, handleChange, handleReset, errors, touched, isValid, dirty }) => (
+                                    <Form >
+                                        <Input 
+                                            name="name"
+                                            placeholder="Имя" 
+                                            value={values.name} 
+                                            onChange={handleChange} 
+                                            icon="EditIcon"/>
+                                        <EmailInput 
+                                            name='email'
+                                            placeholder="Логин"
+                                            value={values.email} 
+                                            onChange={handleChange}
+                                            extraClass="mt-6" 
+                                            icon="EditIcon"/>
+                                        <PasswordInput 
+                                            name="password"
+                                            placeholder="Пароль" 
+                                            extraClass="mt-6 mb-6" 
+                                            value={values.password} 
+                                            onChange={handleChange} 
+                                            icon="EditIcon"/>
+                                        <Button 
+                                            htmlType="button" 
+                                            onClick={handleReset}
+                                            type="primary" 
+                                            extraClass="mr-6" 
+                                            disabled={!dirty}
+                                            size="medium">
+                                            Отмена
+                                        </Button>
+                                        <Button 
+                                            htmlType="submit" 
+                                            type="primary" 
+                                            disabled={!isValid || !dirty}
+                                            size="medium">
+                                            Сохранить
+                                        </Button>
+                                    </Form>
+                                )}
+                            </Formik>
                         </div>
                     </div>
                 </div>

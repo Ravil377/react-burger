@@ -5,19 +5,33 @@ class Api {
         this._options = options;
     }
 
-    _answerForServer(res) {
-        if (res.ok) {
-            return res.json();
-        }
-        return Promise.reject(`Ошибка: ${res.status}`);
-    }
+    _answerForServer = (res) => {
+        return res.ok ? res.json() : res.json().then((err) => Promise.reject(err));
+    };
 
     _request(url, options) {
         return fetch(url, options).then(this._answerForServer)
+    }   
+
+    _fetchWithRefresh = async (url, options) => {
+        try {
+            const res = await fetch(url, options); 
+            return await this._answerForServer(res)
+        } catch (err) {
+            if (err.message === "jwt expired") {
+                const refreshData = await this.refreshToken(); 
+                localStorage.setItem("refreshToken", refreshData.refreshToken);
+                localStorage.setItem("accessToken", refreshData.accessToken);
+                options.headers.authorization = refreshData.accessToken;
+                const res = await fetch(url, options);
+                return await this._answerForServer(res);
+            } else {
+                return Promise.reject(err);
+            }
+        }
     }
 
     getInitialIngredients = () => this._request(`${this._options.baseUrl}/ingredients`, {})
-    
 
     refreshToken = () => this._request(`${this._options.baseUrl}/auth/token`, 
         {
@@ -26,11 +40,23 @@ class Api {
             body: JSON.stringify({token: localStorage.getItem("refreshToken")})
         })
     
-    getUser = (token) => this._request(`${this._options.baseUrl}/auth/user`,
+    getUser = (accessToken) =>  this._fetchWithRefresh(`${this._options.baseUrl}/auth/user`,
         {
             method: "GET",
-            headers: { "Content-Type": "application/json",
-            "Authorization": token },
+            headers: { 
+                "Content-Type": "application/json",
+                "Authorization": accessToken 
+            },
+        }) 
+
+    patchUser = (accessToken, email, name, password) =>  this._fetchWithRefresh(`${this._options.baseUrl}/auth/user`,
+        {
+            method: "PATCH",
+            headers: { 
+                "Content-Type": "application/json",
+                "Authorization": accessToken 
+            },
+            body: JSON.stringify({ email: email, name: name, password: password })
         }) 
 
     postOrder = (ingredients) => this._request(`${this._options.baseUrl}/orders `, 

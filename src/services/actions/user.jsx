@@ -10,6 +10,7 @@ export const getUser = () => {
   return (dispatch) => {
     return api.getUser(localStorage.getItem("accessToken"))
       .then((res) => {
+        dispatch({ type: SET_AUTH_CHECKED, isAuthCheck: true });
         dispatch({
           type: SET_USER,
           user: res.user
@@ -39,6 +40,27 @@ export const checkUserAuth = () => {
     } else {
       dispatch({ type: SET_AUTH_CHECKED, isAuthCheck: true });
     }
+  };
+};
+
+export const patchUser = ({ email, password, name }) => {
+  return function (dispatch) {
+    dispatch({ type: POST_LOADING_REGISTER });
+    api.patchUser(localStorage.getItem("accessToken"), email, name, password)
+      .then(res => {
+        if (res && res.success) {
+          dispatch({
+            type: POST_REGISTER_SUCCESS,
+            user: res.user
+          });
+        }
+      })
+      .catch(err =>
+        dispatch({
+          type: POST_REGISTER_FAILED,
+          err: err
+        })
+      );
   };
 };
 
