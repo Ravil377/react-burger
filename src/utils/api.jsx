@@ -33,7 +33,7 @@ class Api {
             "Authorization": token },
         }) 
 
-    postOrder = (ingredients) => this._request(`${this._options.baseUrl}/token `, 
+    postOrder = (ingredients) => this._request(`${this._options.baseUrl}/orders `, 
         {
             method: "POST",
             headers: { "Content-Type": "application/json" },
