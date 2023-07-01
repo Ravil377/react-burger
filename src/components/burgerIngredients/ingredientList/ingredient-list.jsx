@@ -20,7 +20,7 @@ export const IngredientList = ({ refId, type, title, refs }) => {
             <ul className={`pl-4 pr-4 pt-6 ${ingredientListStyles.list}`} >
                 {filterByType(type, ingredients.ingredients).map((item) => 
                     <IngredientCard 
-                        key={`${item._id}-${Math.random()}`}
+                        key={item._id}
                         ingredient={item}
                     />
                 )}

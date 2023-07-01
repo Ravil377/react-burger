@@ -18,12 +18,55 @@ class Api {
     }
 
     getInitialIngredients = () => this._request(`${this._options.baseUrl}/ingredients`, {})
+    
 
-    postOrder = (ingredients) => this._request(`${this._options.baseUrl}/orders`, 
+    refreshToken = () => this._request(`${this._options.baseUrl}/auth/token`, 
         {
             method: "POST",
             headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({ ingredients }),
+            body: JSON.stringify({token: localStorage.getItem("refreshToken")})
+        })
+    
+    getUser = (token) => this._request(`${this._options.baseUrl}/auth/user`,
+        {
+            method: "GET",
+            headers: { "Content-Type": "application/json",
+            "Authorization": token },
+        }) 
+
+    postOrder = (ingredients) => this._request(`${this._options.baseUrl}/token `, 
+        {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ ingredients })
+        })
+
+    forgotPassword = (email) => this._request(`${this._options.baseUrl}/password-reset`, 
+        {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ email: email })
+        })
+
+    resetPassword = (password, token) => this._request(`${this._options.baseUrl}/password-reset/reset`, 
+        {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ password: password, token: token })
+        })
+
+    register = (email, password, name) => this._request(`${this._options.baseUrl}/auth/register`, 
+        {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ password: password, email: email, name: name })
+        })
+
+    login = (email, password) => this._request(`${this._options.baseUrl}/auth/login`, 
+        {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ password: password, email: email })
         })
 }
 

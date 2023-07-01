@@ -1,16 +1,21 @@
 import React from "react";
 import AppHeader from '../appHeader/app-header';
-import Container from '../container/container';
-import BurgerIngredients from '../burgerIngredients/burger-ingredients';
-import BurgerConstructor from '../burgerConstructor/burger-constructor';
 import { Modal } from '../modal/modal';
 import { IngredientDetails } from '../ingredientDetails/ingredient-details';
 import { OrderDetails } from '../orderDetails/order-details';
 import appStyles from './app.module.css';
 import { useSelector, useDispatch } from 'react-redux';
 import { getIngredients } from '../../services/actions/ingredients';
-import { DndProvider } from "react-dnd";
-import { HTML5Backend } from "react-dnd-html5-backend";
+import { checkUserAuth } from '../../services/actions/user';
+import { Routes, Route } from 'react-router-dom';
+import Main from '../../pages/main';
+import Login from '../../pages/login';
+import Register from '../../pages/register';
+import ForgotPassword from "../../pages/forgot-password";
+import ResetPassword from "../../pages/reset-password";
+import Profile from "../../pages/profile";
+import {OnlyAuth, OnlyUnAuth} from '../protectedRoute';
+import { useHistory } from 'react-router-dom';
 
 export function App() {
   const { order, ingredients, isLoading, isError, ingredientDetail } = useSelector(
@@ -21,39 +26,37 @@ export function App() {
       ingredientDetail: state.ingredientDetail.selectIngredientForDetail
     })
   );
-
   const dispatch = useDispatch();
   
-  React.useEffect(() => dispatch(getIngredients()), [dispatch]);
+  React.useEffect(() => {
+    dispatch(getIngredients());
+    dispatch(checkUserAuth());
+  }, [dispatch]);
 
   return (
-    <>
+      <>
         <AppHeader />
         <main>
-          <DndProvider backend={HTML5Backend}>
-            <Container >
-              <div className={`${appStyles.main} pt-10 text pl-5 pr-5`}>
-                <h1 className={appStyles.h1}>Соберите бургер</h1>
-                {(!isLoading && !isError && ingredients.length) 
-                ? <>
-                    <BurgerIngredients />
-                    <BurgerConstructor />
-                  </>
-                : ''
-                }
-              </div>
-            </Container>
-          </DndProvider>
-          {(ingredientDetail || order) &&
-            <Modal >
-              {ingredientDetail 
-                ? <IngredientDetails />
-                : <OrderDetails />
-              }
-            </Modal>
-          }
+          <Routes>
+            <Route path="/" element={<Main />}/>
+            <Route path="/login" element={<OnlyUnAuth component={<Login />}/>}/>
+            <Route path="/register" element={<OnlyUnAuth component={<Register />}/>}/>
+            <Route path="/forgot-password" element={<OnlyUnAuth component={<ForgotPassword />}/>}/>
+            <Route path="/reset-password" element={<OnlyUnAuth component={<ResetPassword />}/>}/>
+            <Route 
+              path="/profile" 
+              element={<OnlyAuth component={<Profile />}/>}
+            />
+          </Routes>
         </main>
-    </>
-    
+        {(ingredientDetail || order) &&
+          <Modal >
+            {ingredientDetail 
+              ? <IngredientDetails />
+              : <OrderDetails />
+            }
+          </Modal>
+        }
+      </>
   );
 }

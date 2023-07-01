@@ -8,6 +8,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import { useDrop } from "react-dnd";
 import { ADD_INGREDIENT } from '../../services/actions/burger-constructor';
 import { INGREDIENT_INCREMENT, INGREDIENT_DECREMENT } from '../../services/actions/ingredients';
+import { v4 as uuidv4 } from 'uuid';
 
 function BurgerConstructor() {
     const dispatch = useDispatch();
@@ -19,7 +20,7 @@ function BurgerConstructor() {
     const [, dropTarget] = useDrop({
         accept: "ingredient",
         drop(item) {
-            const key = item._id + '-' + Math.random();
+            const key = uuidv4();
             const isBun = item.type === "bun";
             const isBunPrevState = checkBun(selectIngredients);
             let prevBun;
