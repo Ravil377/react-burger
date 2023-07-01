@@ -9,12 +9,16 @@ import { useDrop } from "react-dnd";
 import { ADD_INGREDIENT } from '../../services/actions/burger-constructor';
 import { INGREDIENT_INCREMENT, INGREDIENT_DECREMENT } from '../../services/actions/ingredients';
 import { v4 as uuidv4 } from 'uuid';
+import { useNavigate } from 'react-router-dom';
 
 function BurgerConstructor() {
     const dispatch = useDispatch();
+    const navigate = useNavigate();
     const { selectIngred } = useSelector(state => ({
         selectIngred: state.selectIngredients
     }));  
+    const isAuthChecked = useSelector( state => state.user.isAuthCheck );
+    const user = useSelector( state => state.user.user );
     const { selectIngredients, order } = selectIngred;
 
     const [, dropTarget] = useDrop({
@@ -39,7 +43,14 @@ function BurgerConstructor() {
     });
 
 
-    const handleClickOrderBtn = () => dispatch(getOrder(selectIngredients));
+    const handleClickOrderBtn = () => {
+        if(isAuthChecked && user) {
+            dispatch(getOrder(selectIngredients));    
+        } else {
+            navigate('/login')
+        }
+        
+    }
  
     return (
         <section className={`custom-scroll ${burgerConstructorStyles.constructor}`} ref={dropTarget} >
