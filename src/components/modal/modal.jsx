@@ -7,8 +7,7 @@ import { ModalOverlay } from '../modalOverlay/modal-overlay';
 import { REMOVE_INGREDIENT_FOR_DETAIL } from '../../services/actions/ingredient-details';
 import { REMOVE_ORDER } from '../../services/actions/order';
 import { useDispatch } from 'react-redux';
-import { Navigate } from "react-router-dom";
-import { useNavigate, NavLink } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 
 const modalRoot = document.getElementById("modal");
 
@@ -22,7 +21,7 @@ export const Modal = ({ children }) => {
         dispatch( { type: REMOVE_INGREDIENT_FOR_DETAIL } )
         dispatch( { type: REMOVE_ORDER } )
         navigate('/');
-    }, [dispatch]);
+    }, [dispatch, navigate]);
     
     const handleClosePopupOnEsc = useCallback((e) => (e.code === "Escape") && modalClose(), [modalClose]);
 

@@ -1,13 +1,10 @@
 import React from 'react';
 import { useSelector } from 'react-redux';
-import { useLocation, useParams } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 import { filterById } from '../../utils/utils';
-import { useRef, useState, useEffect } from 'react';
-import { useNavigate, NavLink } from 'react-router-dom';
+import { useState, useEffect } from 'react';
 import ingredientDetailStyles from './ingredient-details.module.css';
 import { titleDetail, caloriesDetail, proteinDetail, fatDetail, carbohydratesDetail } from '../../utils/constants';
-import Container from '../container/container';
-
 export const IngredientDetails = () => {   
     const ingredients = useSelector(state => state.ingredients.ingredients);
     const [ingredient, setIngredient] = useState(null);
@@ -27,8 +24,6 @@ export const IngredientDetails = () => {
     if (!ingredient) {
         return 'loading';
     }
-    
-    // const { image, name, calories, proteins, fat, carbohydrates } = ingredient;
 
     return (
         <div className={ingredientDetailStyles.container}>
