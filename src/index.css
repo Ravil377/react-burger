@@ -7,6 +7,9 @@ body {
   display: grid;
   grid-template-rows: 80px calc(100vh - 80px);
 }
+main {
+  display: flex;
+}
 
 @font-face {
   font-display: swap;

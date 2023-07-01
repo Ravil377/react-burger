@@ -7,7 +7,7 @@ import appStyles from './app.module.css';
 import { useSelector, useDispatch } from 'react-redux';
 import { getIngredients } from '../../services/actions/ingredients';
 import { checkUserAuth } from '../../services/actions/user';
-import { Routes, Route } from 'react-router-dom';
+import { Routes, Route, useLocation } from 'react-router-dom';
 import Main from '../../pages/main';
 import Login from '../../pages/login';
 import Register from '../../pages/register';
@@ -26,7 +26,8 @@ export function App() {
     })
   );
   const dispatch = useDispatch();
-  
+  const location = useLocation();
+  let state = location.state;
   React.useEffect(() => {
     dispatch(getIngredients());
     dispatch(checkUserAuth());
@@ -36,8 +37,9 @@ export function App() {
       <>
         <AppHeader />
         <main>
-          <Routes>
+          <Routes location={state?.backgroundLocation || location}>
             <Route path="/" element={<Main />}/>
+            <Route path="/ingredients/:id" element={<IngredientDetails />} />
             <Route path="/login" element={<OnlyUnAuth component={<Login />}/>}/>
             <Route path="/register" element={<OnlyUnAuth component={<Register />}/>}/>
             <Route path="/forgot-password" element={<OnlyUnAuth component={<ForgotPassword />}/>}/>
@@ -46,14 +48,16 @@ export function App() {
               path="/profile" 
               element={<OnlyAuth component={<Profile />}/>}
             />
-          </Routes>
+          </Routes>          
         </main>
-        {(ingredientDetail || order) &&
+        {state?.backgroundLocation && (
+            <Routes >
+              <Route path="/ingredients/:id" element={<Modal ><IngredientDetails /></Modal>} />
+            </Routes>
+        )}
+        {order &&
           <Modal >
-            {ingredientDetail 
-              ? <IngredientDetails />
-              : <OrderDetails />
-            }
+            <OrderDetails />
           </Modal>
         }
       </>
