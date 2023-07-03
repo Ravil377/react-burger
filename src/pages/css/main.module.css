@@ -1,0 +1,18 @@
+.main {
+    display: grid;
+    grid-template-areas: 'title title' 'ingredients constructor';
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: 41px calc(100vh - 183px);
+    column-gap: 40px;
+    row-gap: 20px;
+    height: inherit;
+}
+
+.h1 {
+    margin: 0;
+    grid-area: title;
+    font-weight: 700;
+    font-size: 36px;
+    line-height: 40px;
+    font-family: 'JetBrainsMono', Arial, sans-serif;
+}

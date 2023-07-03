@@ -1,0 +1,27 @@
+.list {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    overflow: auto;
+    width: inherit;
+    height: calc(100% - 185px);
+    padding-left: 10px;
+}
+.constructor {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    width: 100%;
+    padding-bottom: 20px;
+}
+
+.buttons {
+    display: flex;
+    align-items: center;
+    column-gap: 40px;
+}
+.result {
+    display: flex;
+    align-items: center;
+    column-gap: 8px;
+}

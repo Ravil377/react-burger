@@ -1,16 +1,28 @@
-import React, {useEffect, useCallback} from "react";
+import {useEffect, useCallback} from "react";
 import ReactDOM from 'react-dom';
 import modalStyles from './modal.module.css';
 import { CloseIcon } from '@ya.praktikum/react-developer-burger-ui-components';
 import PropTypes from 'prop-types';
-import { ModalOverlay } from '../modalOverlay/modalOverlay';
+import { ModalOverlay } from '../modalOverlay/modal-overlay';
+import { REMOVE_INGREDIENT_FOR_DETAIL } from '../../services/actions/ingredient-details';
+import { REMOVE_ORDER } from '../../services/actions/order';
+import { useDispatch } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
 
 const modalRoot = document.getElementById("modal");
 
-export const Modal = ({ showModal, modalClose, children }) => {
+export const Modal = ({ children }) => {
+    const dispatch = useDispatch();
+    const navigate = useNavigate();
 
     const handleCloseBtnClick = () => modalClose();
 
+    const modalClose = useCallback(() => {
+        dispatch( { type: REMOVE_INGREDIENT_FOR_DETAIL } )
+        dispatch( { type: REMOVE_ORDER } )
+        navigate('/');
+    }, [dispatch, navigate]);
+    
     const handleClosePopupOnEsc = useCallback((e) => (e.code === "Escape") && modalClose(), [modalClose]);
 
     useEffect(()=> {
@@ -21,7 +33,7 @@ export const Modal = ({ showModal, modalClose, children }) => {
             modalRoot.classList.remove('active');
             document.removeEventListener('keyup', handleClosePopupOnEsc);
         }
-    }, [showModal, handleClosePopupOnEsc])
+    }, [handleClosePopupOnEsc])
 
     return ReactDOM.createPortal(
         (
@@ -38,7 +50,5 @@ export const Modal = ({ showModal, modalClose, children }) => {
 }
 
 Modal.propTypes = {
-    children: PropTypes.node.isRequired,
-    showModal: PropTypes.bool.isRequired,
-    modalClose: PropTypes.func.isRequired,
+    children: PropTypes.node.isRequired
 };
