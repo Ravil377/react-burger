@@ -1,5 +1,3 @@
-import { ReactNode } from "react";
-
 export interface IIngredient {
     key: string;
     _id: string;
@@ -14,14 +12,6 @@ export interface IIngredient {
     image_mobile: string;
     image_large: string;
     count?: number; 
-}
-
-export interface IModalOverlayProps {
-    modalClose: () => void;
-}
-
-export interface IModalProps {
-    children?: ReactNode;
 }
 
 export interface IUserProps {

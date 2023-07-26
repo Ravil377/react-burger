@@ -1,6 +1,9 @@
 import { FC } from 'react';
 import modalOverlayStyles from './modal-overlay.module.css';
-import { IModalOverlayProps } from '../../utils/chema';
+
+interface IModalOverlayProps {
+    modalClose: () => void;
+}
 
 export const ModalOverlay:FC<IModalOverlayProps> = ({ modalClose }) => {
 

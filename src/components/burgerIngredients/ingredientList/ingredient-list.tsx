@@ -3,34 +3,23 @@ import { IngredientCard } from '../ingredientCard/ingredient-card';
 import { filterByType } from '../../../utils/utils';
 import { useSelector } from 'react-redux';
 import { FC, RefObject } from 'react';
-
-interface IIngredient {
-    _id: string;
-    name: string;
-    calories: number;
-    proteins: number;
-    fat: number;
-    carbohydrates: number;
-    image: string;
-    price: number;
-}
+import { IIngredient } from '../../../utils/chema';
 
 interface IIngredientListProps {
-    refId: number;
     type: string;
     title: string;
-    refs: RefObject<HTMLHeadingElement>[];
+    componentRef: RefObject<HTMLHeadingElement>;
 }
 
-export const IngredientList: FC<IIngredientListProps> = ({ refId, type, title, refs }) => {
+export const IngredientList: FC<IIngredientListProps> = ({ type, title, componentRef }) => {
     // @ts-ignore
     const { ingredients } = useSelector(state => state.ingredients);
 
     return (
         <>
-            <h2 data-tab={type} className="type text text_type_main-medium pt-10" ref={refs[refId]}>{title}</h2>
+            <h2 data-tab={type} className="type text text_type_main-medium pt-10" ref={componentRef}>{title}</h2>
             <ul className={`pl-4 pr-4 pt-6 ${ingredientListStyles.list}`} >
-                {filterByType(type, ingredients).map((item: IIngredient) => ( // Use IIngredient type for the map callback
+                {filterByType(type, ingredients).map((item: IIngredient) => (
                     <IngredientCard 
                         key={item._id}
                         ingredient={item}

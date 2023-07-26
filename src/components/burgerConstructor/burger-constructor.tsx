@@ -10,6 +10,7 @@ import { ADD_INGREDIENT } from '../../services/actions/burger-constructor';
 import { INGREDIENT_INCREMENT, INGREDIENT_DECREMENT } from '../../services/actions/ingredients';
 import { v4 as uuidv4 } from 'uuid';
 import { useNavigate } from 'react-router-dom';
+import { IIngredient } from '../../utils/chema';
 
 function BurgerConstructor() {
     const dispatch = useDispatch();
@@ -27,7 +28,7 @@ function BurgerConstructor() {
 
     const [, dropTarget] = useDrop({
         accept: "ingredient",
-        drop(item: any) {
+        drop(item: IIngredient) {
             const key = uuidv4();
             const isBun = item.type === "bun";
             const isBunPrevState = checkBun(selectIngredients);

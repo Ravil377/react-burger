@@ -26,7 +26,7 @@ function BurgerIngredients() {
           const rect = ref.current?.getBoundingClientRect();
           
           if (rect && rect.top >= 0 && rect.bottom <= container.offsetHeight) { 
-            setCurrent(ref.current?.dataset.tab || '');
+            setCurrent(ref.current?.dataset.tab ?? '');
             return;
           }
         });
@@ -45,21 +45,18 @@ function BurgerIngredients() {
             <TabContent containerRef={containerRef}>
                 <IngredientList 
                     title={"Булки"} 
-                    refs={refs}
+                    componentRef={refs[0]}
                     type={"bun"}
-                    refId={0}
                 />
                 <IngredientList 
                     title={"Соусы"} 
-                    refs={refs} 
+                    componentRef={refs[1]} 
                     type={"sauce"}
-                    refId={1}
                 />
                 <IngredientList 
                     title={"Начинки"} 
                     type={"main"}
-                    refs={refs} 
-                    refId={2}
+                    componentRef={refs[2]} 
                 />
             </TabContent>
         </section>
