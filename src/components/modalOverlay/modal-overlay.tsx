@@ -1,7 +1,8 @@
+import { FC } from 'react';
 import modalOverlayStyles from './modal-overlay.module.css';
-import PropTypes from 'prop-types';
+import { IModalOverlayProps } from '../../utils/chema';
 
-export const ModalOverlay = ({ modalClose }) => {
+export const ModalOverlay:FC<IModalOverlayProps> = ({ modalClose }) => {
 
     const handleOverlayClick = () => modalClose();
 
@@ -9,7 +10,3 @@ export const ModalOverlay = ({ modalClose }) => {
         <div className={`${modalOverlayStyles.overlay}`} onClick={handleOverlayClick}></div>
     );
 }
-
-ModalOverlay.propTypes = {
-    modalClose: PropTypes.func.isRequired,
-};

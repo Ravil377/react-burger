@@ -5,18 +5,26 @@ import { REMOVE_INGREDIENT, UPDATE_INGREDIENT_POSITION } from '../../../services
 import { INGREDIENT_DECREMENT } from '../../../services/actions/ingredients';
 import { useDrag, useDrop } from "react-dnd";
 import { useRef } from 'react'
-import PropTypes from 'prop-types';
-import { ingredient } from '../../../utils/prop-types';
+import { IIngredient } from '../../../utils/chema';
 
 const style = {
     cursor: 'move',
 }
 
-export const ConstructorIngredient = ({ component, index }) => {
-    const dispatch = useDispatch();
-    const ref = useRef(null)
+interface IConstructorIngredientProps {
+  component: IIngredient; 
+  index: number;
+}
 
-    const removeIngredient = (component) => {
+interface IDraggedItem {
+  index: number;
+}
+
+export const ConstructorIngredient: React.FC<IConstructorIngredientProps> = ({ component, index }) => {
+    const dispatch = useDispatch();
+    const ref = useRef<HTMLHeadingElement | null>(null);
+
+    const removeIngredient = (component: IIngredient) => {
         dispatch({ type: REMOVE_INGREDIENT, key: component.key });
         dispatch({ type: INGREDIENT_DECREMENT, id: component._id });
     }
@@ -28,7 +36,7 @@ export const ConstructorIngredient = ({ component, index }) => {
           handlerId: monitor.getHandlerId(),
         }
       },
-      hover(item, monitor) {
+      hover(item: any, monitor) {
         if (!ref.current) {
           return
         }
@@ -38,18 +46,23 @@ export const ConstructorIngredient = ({ component, index }) => {
         if (dragIndex === hoverIndex) {
           return
         }
-        const hoverBoundingRect = ref.current?.getBoundingClientRect()
-        const hoverMiddleY =
-          (hoverBoundingRect.bottom - hoverBoundingRect.top) / 2
-        const clientOffset = monitor.getClientOffset()
-        const hoverClientY = clientOffset.y - hoverBoundingRect.top
+        const hoverBoundingRect = ref.current?.getBoundingClientRect();
+        const hoverMiddleY = (hoverBoundingRect.bottom - hoverBoundingRect.top) / 2;
+        const clientOffset = monitor.getClientOffset();
+        let hoverClientY;
+        if(clientOffset) {
+          hoverClientY = clientOffset.y - hoverBoundingRect.top;
+        }
+        
+        if(hoverClientY) {
+          if (dragIndex < hoverIndex && hoverClientY < hoverMiddleY) {
+            return
+          }
+          if (dragIndex > hoverIndex && hoverClientY > hoverMiddleY) {
+            return
+          }
+        }
 
-        if (dragIndex < hoverIndex && hoverClientY < hoverMiddleY) {
-          return
-        }
-        if (dragIndex > hoverIndex && hoverClientY > hoverMiddleY) {
-          return
-        }
         dispatch({ 
             type: UPDATE_INGREDIENT_POSITION, 
             payload: { dragIndex, hoverIndex } 
@@ -84,8 +97,3 @@ export const ConstructorIngredient = ({ component, index }) => {
         </div>
     )
 }
-
-ConstructorIngredient.propTypes = {
-  component: PropTypes.shape(ingredient).isRequired,
-  index: PropTypes.number.isRequired
-};

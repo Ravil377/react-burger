@@ -1,4 +1,4 @@
-import {useEffect, useCallback} from "react";
+import {useEffect, useCallback, FC, ReactNode} from "react";
 import ReactDOM from 'react-dom';
 import modalStyles from './modal.module.css';
 import { CloseIcon } from '@ya.praktikum/react-developer-burger-ui-components';
@@ -8,10 +8,11 @@ import { REMOVE_INGREDIENT_FOR_DETAIL } from '../../services/actions/ingredient-
 import { REMOVE_ORDER } from '../../services/actions/order';
 import { useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
+import { IModalProps } from "../../utils/chema";
 
 const modalRoot = document.getElementById("modal");
 
-export const Modal = ({ children }) => {
+export const Modal:FC<IModalProps> = ({ children }) => {
     const dispatch = useDispatch();
     const navigate = useNavigate();
 
@@ -23,17 +24,25 @@ export const Modal = ({ children }) => {
         navigate('/');
     }, [dispatch, navigate]);
     
-    const handleClosePopupOnEsc = useCallback((e) => (e.code === "Escape") && modalClose(), [modalClose]);
+    const handleClosePopupOnEsc = useCallback((e:any) => (e.code === "Escape") && modalClose(), [modalClose]);
 
     useEffect(()=> {
-        modalRoot.classList.add('active');
-        document.addEventListener('keyup', handleClosePopupOnEsc);
+        if(modalRoot) {
+            modalRoot.classList.add('active');
+            document.addEventListener('keyup', handleClosePopupOnEsc);
+        }
 
         return () => {
-            modalRoot.classList.remove('active');
-            document.removeEventListener('keyup', handleClosePopupOnEsc);
+            if(modalRoot) {
+                modalRoot.classList.remove('active');
+                document.removeEventListener('keyup', handleClosePopupOnEsc);
+            }
         }
     }, [handleClosePopupOnEsc])
+
+    if (!modalRoot) {
+        return null;
+    }
 
     return ReactDOM.createPortal(
         (
@@ -48,7 +57,3 @@ export const Modal = ({ children }) => {
         modalRoot
     );
 }
-
-Modal.propTypes = {
-    children: PropTypes.node.isRequired
-};

@@ -1,7 +1,10 @@
 import containerStyles from './container.module.css';
-import PropTypes from 'prop-types';
 
-function Container(props) {
+interface IContainerProps {
+    children: React.ReactNode;
+}
+
+const Container: React.FC<IContainerProps> = (props) => {
     return (
         <div className={containerStyles.outer}>
             <div className={containerStyles.inner}>
@@ -11,8 +14,5 @@ function Container(props) {
     );
 }
 
-Container.propTypes = {
-    children: PropTypes.node.isRequired,
-};
 
 export default Container;

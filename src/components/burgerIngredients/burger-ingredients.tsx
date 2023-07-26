@@ -6,34 +6,36 @@ import { IngredientList } from './ingredientList/ingredient-list';
 
 function BurgerIngredients() {
     const [current, setCurrent] = useState('bun');
-    const containerRef = useRef(null);
+    const containerRef = useRef<HTMLDivElement | null>(null);
     const refs = [
-        useRef(null),
-        useRef(null),
-        useRef(null)
+        useRef<HTMLHeadingElement | null>(null),
+        useRef<HTMLHeadingElement | null>(null),
+        useRef<HTMLHeadingElement | null>(null)
     ];
 
-    const handleChangeTab = (el) => {
+    const handleChangeTab = (el: string) => {
         setCurrent(el);
     }
 
     useEffect(() => {
       const container = containerRef.current;
+      if (!container) return;
+
       const handleScroll = () => {
         refs.forEach((ref, index) => {
-          const rect = ref.current.getBoundingClientRect();
+          const rect = ref.current?.getBoundingClientRect();
           
-          if (rect.top >= 0 && rect.bottom <= container.offsetHeight) {
-            setCurrent(ref.current.dataset.tab);
+          if (rect && rect.top >= 0 && rect.bottom <= container.offsetHeight) { 
+            setCurrent(ref.current?.dataset.tab || '');
             return;
           }
         });
       };    
       
-      container.addEventListener('scroll', handleScroll);
+      container.addEventListener('scroll', handleScroll); 
     
       return () => {
-        container.removeEventListener('scroll', handleScroll);
+        container.removeEventListener('scroll', handleScroll); 
       };
     }, []);
 
@@ -65,8 +67,3 @@ function BurgerIngredients() {
 }
 
 export default BurgerIngredients;
-
-
-
-
-

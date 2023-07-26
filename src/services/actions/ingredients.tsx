@@ -8,6 +8,7 @@ export const INGREDIENT_INCREMENT = "INGREDIENT_INCREMENT";
 export const INGREDIENT_DECREMENT = "INGREDIENT_DECREMENT";
 
 export function getIngredients() {
+    // @ts-ignore
     return function(dispatch) {
         dispatch({
             type: GET_INGREDIENTS_REQUEST

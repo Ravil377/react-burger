@@ -1,9 +1,20 @@
 import { ConstructorElement } from '@ya.praktikum/react-developer-burger-ui-components';
-import { ingredientsPropTypes } from '../../../utils/prop-types';
-import PropTypes from 'prop-types';
 import bunStyles from './bun.module.css';
+import { FC } from 'react';
 
-export const Bun = ({ bun, position, positionText }) => {
+interface IBunProps {
+    bun: IBun[];
+    position: 'bottom' | 'top' | undefined;
+    positionText: string;
+}
+
+interface IBun {
+    name: string;
+    price: number;
+    image: string;
+}
+
+export const Bun:FC<IBunProps> = ({ bun, position, positionText }) => {
     return (
         <ConstructorElement
             type={position}
@@ -15,8 +26,3 @@ export const Bun = ({ bun, position, positionText }) => {
         />        
     )
 }
-Bun.propTypes = {
-    bun: PropTypes.arrayOf(ingredientsPropTypes).isRequired,
-    position: PropTypes.string.isRequired,
-    positionText: PropTypes.string.isRequired,
-};

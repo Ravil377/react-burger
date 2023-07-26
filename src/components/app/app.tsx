@@ -18,8 +18,11 @@ import {OnlyAuth, OnlyUnAuth} from '../protectedRoute';
 export function App() {
   const { order } = useSelector(
     state => ({
+      // @ts-ignore
       order: state.order.order,
+      // @ts-ignore
       ingredients: state.ingredients.ingredients,
+      // @ts-ignore
       selectIngredients: state.selectIngredients
     })
   );
@@ -28,10 +31,13 @@ export function App() {
   let state = location.state;
 
   React.useEffect(() => {
+    // @ts-ignore
     dispatch(getIngredients());
     if (localStorage.getItem("accessToken")) {
+      // @ts-ignore
       dispatch(getUser());
     } else {
+      // @ts-ignore
       dispatch(checkUserAuth());
     }
   }, [dispatch]);

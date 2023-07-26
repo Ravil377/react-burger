@@ -4,6 +4,7 @@ import success from "../../images/success.svg";
 import { useSelector } from 'react-redux';
 
 export const OrderDetails = () => {
+    // @ts-ignore
     const { data } = useSelector(state => ({ data: state.order.order }));  
     const { name, order } = data;
     

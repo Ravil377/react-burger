@@ -1,4 +1,9 @@
 import api from '../../utils/api';
+import { 
+  IForgotPasswordUserProps, 
+  IPostLoginUser, 
+  IResetPasswordUserProps, 
+  IUserProps } from '../../utils/chema';
 
 export const SET_USER = "SET_USER";
 export const SET_AUTH_CHECKED = "SET_AUTH_CHECKED";
@@ -7,6 +12,7 @@ export const POST_REGISTER_SUCCESS = "POST_REGISTER_SUCCESS";
 export const POST_REGISTER_FAILED = "POST_REGISTER_FAILED";
 
 export const getUser = () => {
+  // @ts-ignore
   return (dispatch) => {
     return api.getUser(localStorage.getItem("accessToken"))
       .then((res) => {
@@ -20,6 +26,7 @@ export const getUser = () => {
 };
 
 export const checkUserAuth = () => {
+  // @ts-ignore
   return (dispatch) => {
     if (localStorage.getItem("accessToken")) {
       api.refreshToken()
@@ -43,7 +50,8 @@ export const checkUserAuth = () => {
   };
 };
 
-export const patchUser = ({ email, password, name }) => {
+export const patchUser = ({ email, password, name }: IUserProps) => {
+  // @ts-ignore
   return function (dispatch) {
     dispatch({ type: POST_LOADING_REGISTER });
     api.patchUser(localStorage.getItem("accessToken"), email, name, password)
@@ -64,7 +72,8 @@ export const patchUser = ({ email, password, name }) => {
   };
 };
 
-export const postRegisterUser = ({ email, password, name }) => {
+export const postRegisterUser = ({ email, password, name }:IUserProps) => {
+  // @ts-ignore
   return function (dispatch) {
     dispatch({ type: POST_LOADING_REGISTER });
     api.register(email, password, name)
@@ -87,7 +96,9 @@ export const postRegisterUser = ({ email, password, name }) => {
   };
 };
 
-export const resetPasswordUser = ({ password, token }, history) => {
+
+export const resetPasswordUser = ({ password, token }: IResetPasswordUserProps, history: any) => {
+  // @ts-ignore
   return function (dispatch) {
     dispatch({ type: POST_LOADING_REGISTER });
     api.resetPassword(password, token)
@@ -105,7 +116,9 @@ export const resetPasswordUser = ({ password, token }, history) => {
   };
 };
 
-export const forgotPasswordUser = ({ email }, history) => {
+
+export const forgotPasswordUser = ({ email }:IForgotPasswordUserProps, history: any) => {
+  // @ts-ignore
   return function (dispatch) {
     dispatch({ type: POST_LOADING_REGISTER });
     api.forgotPassword(email)
@@ -123,7 +136,8 @@ export const forgotPasswordUser = ({ email }, history) => {
   };
 };
 
-export function postLoginUser({ email, password }) {
+export function postLoginUser({ email, password }:IPostLoginUser) {
+  // @ts-ignore
   return function (dispatch) {
     dispatch({ type: POST_LOADING_REGISTER });
     api.login(email, password)
@@ -147,6 +161,7 @@ export function postLoginUser({ email, password }) {
 }
 
 export function logOutUser() {
+  // @ts-ignore
     return function (dispatch) {
       dispatch({ type: POST_LOADING_REGISTER });
       api.logOut(localStorage.getItem("refreshToken"))
@@ -167,4 +182,4 @@ export function logOutUser() {
           })
         );
     };
-  }
+}

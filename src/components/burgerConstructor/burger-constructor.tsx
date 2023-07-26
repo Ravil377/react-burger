@@ -14,16 +14,20 @@ import { useNavigate } from 'react-router-dom';
 function BurgerConstructor() {
     const dispatch = useDispatch();
     const navigate = useNavigate();
+    
     const { selectIngred } = useSelector(state => ({
+        // @ts-ignore
         selectIngred: state.selectIngredients
-    }));  
+    }));
+    // @ts-ignore
     const isAuthChecked = useSelector( state => state.user.isAuthCheck );
+    // @ts-ignore
     const user = useSelector( state => state.user.user );
     const { selectIngredients, order } = selectIngred;
 
     const [, dropTarget] = useDrop({
         accept: "ingredient",
-        drop(item) {
+        drop(item: any) {
             const key = uuidv4();
             const isBun = item.type === "bun";
             const isBunPrevState = checkBun(selectIngredients);
@@ -45,6 +49,7 @@ function BurgerConstructor() {
 
     const handleClickOrderBtn = () => {
         if(isAuthChecked && user) {
+            // @ts-ignore
             dispatch(getOrder(selectIngredients));    
         } else {
             navigate('/login')
