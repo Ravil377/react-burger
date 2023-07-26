@@ -1,8 +1,7 @@
-import {useEffect, useCallback, FC, ReactNode} from "react";
+import {useEffect, useCallback, FC} from "react";
 import ReactDOM from 'react-dom';
 import modalStyles from './modal.module.css';
 import { CloseIcon } from '@ya.praktikum/react-developer-burger-ui-components';
-import PropTypes from 'prop-types';
 import { ModalOverlay } from '../modalOverlay/modal-overlay';
 import { REMOVE_INGREDIENT_FOR_DETAIL } from '../../services/actions/ingredient-details';
 import { REMOVE_ORDER } from '../../services/actions/order';

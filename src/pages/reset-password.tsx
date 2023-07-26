@@ -6,14 +6,17 @@ import { resetPasswordUser } from '../services/actions/user';
 import { useSelector, useDispatch } from 'react-redux';
 import { Formik, Form } from 'formik';
 import * as Yup from 'yup';
+import { IResetPasswordUserProps } from '../utils/chema';
 
 
 function ResetPassword() {
     const dispatch = useDispatch();
+    // @ts-ignore
     const { isLoading } = useSelector(state => state.user);
     const navigate = useNavigate();
 
-    const handleSubmit = (values) => {
+    const handleSubmit = (values:IResetPasswordUserProps) => {
+        // @ts-ignore
         dispatch(resetPasswordUser(values));
         navigate('/login');
     }
@@ -37,7 +40,7 @@ function ResetPassword() {
                     <h1 className={`${formStyles.title} text text_type_main-medium`}>Восстановление пароля</h1>
                     <Formik 
                         initialValues={initialValues} 
-                        onSubmit={(values)=>handleSubmit(values)}
+                        onSubmit={handleSubmit}
                         validationSchema={validationSchema}>
                             {({ values, handleChange, errors, touched, isValid, dirty }) => (
                                 <Form className={`${formStyles.form} pt-6 pb-20`}>

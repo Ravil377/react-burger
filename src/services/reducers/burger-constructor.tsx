@@ -4,6 +4,7 @@ import {
   UPDATE_INGREDIENT_POSITION 
 } from '../actions/burger-constructor';
 import { checkBun } from '../../utils/utils';
+import { IIngredient } from '../../utils/chema';
 
 const selectIngredientsInitialState = {
     selectIngredients: [],
@@ -11,11 +12,11 @@ const selectIngredientsInitialState = {
     order: 0
 };
 
-export const selectIngredientsReducer = (state = selectIngredientsInitialState, action) => {
+export const selectIngredientsReducer = (state = selectIngredientsInitialState, action: any) => {
     switch (action.type) {
         case ADD_INGREDIENT: {
-            let updateSelectIngredients;
-            let prevBunPrice;
+          let updateSelectIngredients: IIngredient[] = [];
+            let prevBunPrice: number = 0;
             const isBun = action.ingredient.type === "bun";
             const isBunPrevState = checkBun(state.selectIngredients);
             if( isBun && isBunPrevState !== -1 ) {
@@ -23,6 +24,7 @@ export const selectIngredientsReducer = (state = selectIngredientsInitialState, 
                 prevBunPrice = updateSelectIngredients[isBunPrevState].price;
                 updateSelectIngredients[isBunPrevState] = action.ingredient;
             }
+            
             return {
               ...state,
               selectIngredients: ((isBun && isBunPrevState === -1) || !isBun) 
@@ -33,9 +35,11 @@ export const selectIngredientsReducer = (state = selectIngredientsInitialState, 
                 ? state.order += action.ingredient.price * 2
                 : state.order = state.order - prevBunPrice * 2 + action.ingredient.price * 2
             };
+
+            
         }
         case REMOVE_INGREDIENT: {
-            const newIngredients = state.selectIngredients.filter(ingredient => ingredient.key !== action.key);
+            const newIngredients = state.selectIngredients.filter((ingredient: IIngredient) => ingredient.key !== action.key);
             return {
                 ...state,
                 selectIngredients: newIngredients,

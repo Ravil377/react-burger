@@ -1,19 +1,19 @@
-import React from "react";
 import { DndProvider } from "react-dnd";
 import { HTML5Backend } from "react-dnd-html5-backend";
 import Container from '../components/container/container';
 import BurgerIngredients from '../components/burgerIngredients/burger-ingredients';
 import BurgerConstructor from '../components/burgerConstructor/burger-constructor';
-import { useSelector, useDispatch } from 'react-redux';
+import { useSelector } from 'react-redux';
 import mainStyles from './css/main.module.css';
 
 function Main() {
-    const { order, ingredients, isLoading, isError, ingredientDetail } = useSelector(
+    // @ts-ignore
+    const {  ingredients, isLoading, isError } = useSelector(
         state => ({
-          order: state.order.order,
+          // @ts-ignore
           ingredients: state.ingredients.ingredients,
-          selectIngredients: state.selectIngredients,
-          ingredientDetail: state.ingredientDetail.selectIngredientForDetail
+          // @ts-ignore
+          selectIngredients: state.selectIngredients
         })
     );
 

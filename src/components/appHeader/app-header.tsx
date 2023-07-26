@@ -12,10 +12,10 @@ function AppHeader() {
                 <nav className={headerStyles.nav} >
                     <div className={headerStyles.buttons}>
                         <Link to="/" className={`${headerStyles.button} ${location.pathname === "/" ? headerStyles.active : ''} pt-4 pb-4 pl-5 pr-5`}>
-                            <BurgerIcon style={{background: 'unset'}} pe="primary" /> {CONSTRUCTOR}
+                            <BurgerIcon type="primary" /> {CONSTRUCTOR}
                         </Link>
                         <Link to="/coomingsoon" className={`${headerStyles.button} ${location.pathname === "/coomingsoon" ? headerStyles.active : ''} pt-4 pb-4 pl-5 pr-5`} >
-                            <ListIcon style={{background: 'unset'}} pe="primary" /> {ORDERS}
+                            <ListIcon type="primary" /> {ORDERS}
                         </Link>
                     </div>
                     <Logo />

@@ -1,4 +1,3 @@
-import { IIngredient } from './chema';
 import { url } from './constants'
 
 interface IApiOptions {

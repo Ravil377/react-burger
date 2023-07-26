@@ -4,12 +4,14 @@ import { EmailInput, PasswordInput, Input, Button } from '@ya.praktikum/react-de
 import { useNavigate, NavLink } from 'react-router-dom';
 import { logOutUser, patchUser } from '../services/actions/user';
 import { useDispatch, useSelector } from 'react-redux';
-import { Formik, Form } from 'formik';
+import { Formik, Form, FormikHelpers } from 'formik';
 import * as Yup from 'yup';
+import { IUserProps } from '../utils/chema';
 
 function Profile() {
     const dispatch = useDispatch();
     const navigate = useNavigate();
+    // @ts-ignore
     const user = useSelector( state => state.user.user );
 
     const initialValues = {
@@ -29,11 +31,16 @@ function Profile() {
     });
 
     const onClick = () => {
+        // @ts-ignore
         dispatch(logOutUser());
         navigate('/login');
     }
 
-    const handleSubmit = (values) => dispatch(patchUser(values));
+    const handleSubmit = (values: IUserProps, formikHelpers: FormikHelpers<IUserProps>) => {
+        // @ts-ignore
+        dispatch(patchUser(values));
+        formikHelpers.resetForm();
+    }
 
     return (
         <Container >
@@ -59,7 +66,7 @@ function Profile() {
                         <div className={profileStyles.profile}>
                             <Formik 
                                 initialValues={initialValues} 
-                                onSubmit={(values)=>handleSubmit(values)}
+                                onSubmit={handleSubmit}
                                 validationSchema={validationSchema}>
                                 {({ values, handleChange, handleReset, errors, touched, isValid, dirty }) => (
                                     <Form >
@@ -74,8 +81,7 @@ function Profile() {
                                             placeholder="Логин"
                                             value={values.email} 
                                             onChange={handleChange}
-                                            extraClass="mt-6" 
-                                            icon="EditIcon"/>
+                                            extraClass="mt-6" />
                                         <PasswordInput 
                                             name="password"
                                             placeholder="Пароль" 

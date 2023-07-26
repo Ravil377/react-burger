@@ -15,7 +15,7 @@ const userInitialState = {
     textError: ''
 };
 
-export const userReducer = (state = userInitialState, action) => {
+export const userReducer = (state = userInitialState, action: any) => {
     switch (action.type) {
         case POST_LOADING_REGISTER: {
             return {

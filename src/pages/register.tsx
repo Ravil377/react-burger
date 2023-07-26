@@ -2,13 +2,15 @@ import formStyles from './css/form.module.css';
 import Container from '../components/container/container';
 import { EmailInput, PasswordInput, Button, Input } from '@ya.praktikum/react-developer-burger-ui-components'
 import { Link } from 'react-router-dom';
-import { Formik, Form } from 'formik';
+import { Formik, Form, FormikHelpers } from 'formik';
 import * as Yup from 'yup';
 import { useSelector, useDispatch } from 'react-redux';
 import { postRegisterUser } from '../services/actions/user';
+import { IUserProps } from '../utils/chema';
 
 function Register() {
     const dispatch = useDispatch();
+    // @ts-ignore
     const { isLoading } = useSelector(state => state.user);
 
     const initialValues = {
@@ -16,8 +18,12 @@ function Register() {
         name: '',
         password: ''
     };
-
-    const handleSubmit = (values) => dispatch(postRegisterUser(values));
+   
+    const handleSubmit = (values: IUserProps, formikHelpers: FormikHelpers<IUserProps>) => {
+        // @ts-ignore
+        dispatch(postRegisterUser(values));
+        formikHelpers.resetForm();
+    }
 
     const validationSchema = Yup.object().shape({
         email: Yup.string()
@@ -36,7 +42,7 @@ function Register() {
                     <h1 className={`${formStyles.title} text text_type_main-medium`}>Регистрация</h1>
                     <Formik 
                         initialValues={initialValues} 
-                        onSubmit={(values)=>handleSubmit(values)}
+                        onSubmit={handleSubmit}
                         validationSchema={validationSchema}>
                         {({ values, handleChange, errors, touched, isValid, dirty }) => (
                             <Form className={`${formStyles.form} pt-6 pb-20`}>

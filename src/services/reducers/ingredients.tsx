@@ -1,20 +1,20 @@
+import { IIngredient } from '../../utils/chema';
 import { 
     GET_INGREDIENTS_REQUEST,  
     GET_INGREDIENTS_FAILED, 
     GET_INGREDIENTS_SUCCESS, 
-    GET_INGREDIENTS, 
     INGREDIENT_DECREMENT, 
     INGREDIENT_INCREMENT 
 } from '../actions/ingredients';
 
 const ingredientsInitialState = {
-    ingredients: [],
+    ingredients:  [] as IIngredient[],
     isLoading: false,
     isError: false,
     textError: ''
 };
 
-export const ingredientsReducer = (state = ingredientsInitialState, action) => {
+export const ingredientsReducer = (state = ingredientsInitialState, action: any) => {
     switch (action.type) {
         case GET_INGREDIENTS_REQUEST: {
             return {

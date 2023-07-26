@@ -12,7 +12,7 @@ const orderInitialState = {
     order: null
 };
 
-export const orderReducer = (state = orderInitialState, action) => {
+export const orderReducer = (state = orderInitialState, action: any) => {
     switch (action.type) {
         case GET_ORDER_REQUEST: {
             return {

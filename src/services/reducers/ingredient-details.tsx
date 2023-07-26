@@ -4,7 +4,7 @@ const ingredientDetailInitialState = {
     selectIngredientForDetail: null
 };
 
-export const ingredientDetailReducer = (state = ingredientDetailInitialState, action) => {
+export const ingredientDetailReducer = (state = ingredientDetailInitialState, action: any) => {
     switch (action.type) {
         case ADD_INGREDIENT_FOR_DETAIL: {
             return {

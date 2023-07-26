@@ -6,13 +6,16 @@ import { forgotPasswordUser } from '../services/actions/user';
 import { useSelector, useDispatch } from 'react-redux';
 import { Formik, Form } from 'formik';
 import * as Yup from 'yup';
+import { IForgotPasswordUserProps } from '../utils/chema';
 
 function ForgotPassword() {
     const dispatch = useDispatch();
+    // @ts-ignore
     const { isLoading } = useSelector(state => state.user);
     const navigate = useNavigate();
 
-    const handleSubmit = (values) => {
+    const handleSubmit = (values: IForgotPasswordUserProps) => {
+        // @ts-ignore
         dispatch(forgotPasswordUser(values));
         navigate('/reset-password');
     }

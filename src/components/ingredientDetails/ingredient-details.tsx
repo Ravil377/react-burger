@@ -15,11 +15,8 @@ export const IngredientDetails = () => {
     useEffect(() => {
         if(id) {
             const extractedId = id.substring(1);
-            setIngredient(prevIngredient => {
-                const newIngredient = filterById(extractedId, ingredients);
-                return newIngredient;
-            });
-            
+            const newIngredient = filterById(extractedId, ingredients);
+            newIngredient && setIngredient(newIngredient);
         }
     }, [id, ingredients])
 
