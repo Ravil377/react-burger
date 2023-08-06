@@ -5,17 +5,18 @@ import {
   IResetPasswordUserProps, 
   IUserProps } from '../../utils/chema';
 
-export const SET_USER = "SET_USER";
-export const SET_AUTH_CHECKED = "SET_AUTH_CHECKED";
-export const POST_LOADING_REGISTER = "POST_LOADING_REGISTER";
-export const POST_REGISTER_SUCCESS = "POST_REGISTER_SUCCESS";
-export const POST_REGISTER_FAILED = "POST_REGISTER_FAILED";
+export const SET_USER: "SET_USER" = "SET_USER";
+export const SET_AUTH_CHECKED: "SET_AUTH_CHECKED" = "SET_AUTH_CHECKED";
+export const POST_LOADING_REGISTER: "POST_LOADING_REGISTER" = "POST_LOADING_REGISTER";
+export const POST_REGISTER_SUCCESS: "POST_REGISTER_SUCCESS" = "POST_REGISTER_SUCCESS";
+export const POST_REGISTER_FAILED: "POST_REGISTER_FAILED" = "POST_REGISTER_FAILED";
 
 export const getUser = () => {
   // @ts-ignore
   return (dispatch) => {
     return api.getUser(localStorage.getItem("accessToken"))
       .then((res) => {
+        console.log(res.user)
         dispatch({ type: SET_AUTH_CHECKED, isAuthCheck: true });
         dispatch({
           type: SET_USER,

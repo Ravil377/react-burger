@@ -14,6 +14,19 @@ export interface IIngredient {
     count?: number; 
 }
 
+export interface IOrder {
+    success: boolean;
+    name: string;
+    order: {
+      number: number;
+    };
+}
+
+export interface IUser {
+    email: string;
+    name: string;
+}
+
 export interface IUserProps {
     email: string;
     password: string;
