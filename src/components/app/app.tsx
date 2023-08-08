@@ -14,6 +14,7 @@ import ForgotPassword from "../../pages/forgot-password";
 import ResetPassword from "../../pages/reset-password";
 import Profile from "../../pages/profile";
 import {OnlyAuth, OnlyUnAuth} from '../protectedRoute';
+import Feed from "../../pages/feed";
 
 export function App() {
   const { order } = useSelector(
@@ -50,8 +51,10 @@ export function App() {
         <main>
           <Routes location={state?.backgroundLocation || location}>
             <Route path="/" element={<Main />}/>
+            <Route path="/feed" element={<Feed />}/>
             <Route path="/ingredients/:id" element={<IngredientDetails />} />
             <Route path="/login" element={<OnlyUnAuth component={<Login />}/>}/>
+            
             <Route path="/register" element={<OnlyUnAuth component={<Register />}/>}/>
             <Route path="/forgot-password" element={<OnlyUnAuth component={<ForgotPassword />}/>}/>
             <Route path="/reset-password" element={<OnlyUnAuth component={<ResetPassword />}/>}/>

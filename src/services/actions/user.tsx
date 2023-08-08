@@ -16,7 +16,6 @@ export const getUser = () => {
   return (dispatch) => {
     return api.getUser(localStorage.getItem("accessToken"))
       .then((res) => {
-        console.log(res.user)
         dispatch({ type: SET_AUTH_CHECKED, isAuthCheck: true });
         dispatch({
           type: SET_USER,

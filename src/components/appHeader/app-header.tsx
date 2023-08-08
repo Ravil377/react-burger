@@ -14,7 +14,7 @@ function AppHeader() {
                         <Link to="/" className={`${headerStyles.button} ${location.pathname === "/" ? headerStyles.active : ''} pt-4 pb-4 pl-5 pr-5`}>
                             <BurgerIcon type="primary" /> {CONSTRUCTOR}
                         </Link>
-                        <Link to="/coomingsoon" className={`${headerStyles.button} ${location.pathname === "/coomingsoon" ? headerStyles.active : ''} pt-4 pb-4 pl-5 pr-5`} >
+                        <Link to="/feed" className={`${headerStyles.button} ${location.pathname === "/feed" ? headerStyles.active : ''} pt-4 pb-4 pl-5 pr-5`} >
                             <ListIcon type="primary" /> {ORDERS}
                         </Link>
                     </div>
