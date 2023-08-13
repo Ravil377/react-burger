@@ -25,14 +25,7 @@ export const FeedList = () => {
 
     return (
         <div className={`${feedListStyle.list} custom-scroll`}>
-            {orders.map((order:TOrder) => 
-                <FeedOrder order={order}/> ) 
-            }
-            {/* <FeedOrder />
-            <FeedOrder />
-            <FeedOrder />
-            <FeedOrder />
-            <FeedOrder /> */}
+            {orders.map((order:TOrder) => <FeedOrder order={order}/> )}
         </div>
     )
 }
