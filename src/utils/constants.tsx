@@ -14,3 +14,4 @@ export const start = "Ваш заказ начали готовить";
 export const wait = "Дождитесь готовности на орбитальной станции";
 
 export const url = "https://norma.nomoreparties.space/api";
+export const ws = "wss://norma.nomoreparties.space";

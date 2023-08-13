@@ -1,32 +1,53 @@
-import { CurrencyIcon } from "@ya.praktikum/react-developer-burger-ui-components";
+import { CurrencyIcon, FormattedDate } from "@ya.praktikum/react-developer-burger-ui-components";
 import FeedOrderStyle from "./order.module.css";
 import { Link, useParams } from "react-router-dom";
+import { TOrder, useAppSelector } from "../../../utils/chema";
+import { FC } from "react";
+import { filterById } from "../../../utils/utils";
 
-export const FeedOrder = () => {
+interface IFeedOrderProps {
+    order: TOrder;
+}
+
+export const FeedOrder:FC<IFeedOrderProps> = ({ order }) => {
+    const { ingredients } = useAppSelector(state => state.ingredients);
     const { id } = useParams();
+    const { name, number, updatedAt } = order;
+    
+    const sum = (): number => {
+        let sum = 0;
+        order.ingredients.map((ingredient) => {
+            const i = filterById(ingredient, ingredients);
+            if(i) sum = sum + i.price;
+        })
+        return sum;
+    }
+
     return (
         <Link  
             to={`/feed/:034535`}
             className={`${FeedOrderStyle.order} p-6`}>
             <div className={FeedOrderStyle.orderTop}>
-                <p className="text text_type_digits-default">#034535</p>
-                <p className="text text_type_main-default text_color_inactive">Сегодня, 16:20</p>
+                <p className="text text_type_digits-default">#{number}</p>
+                <p className="text text_type_main-default text_color_inactive"><FormattedDate date={new Date(updatedAt)} /></p>
             </div>
-            <div className='text text_type_main-medium mt-6'>Death Star Starship Main бургер</div>
+            <div className='text text_type_main-medium mt-6'>{name}</div>
             <div className={`${FeedOrderStyle.orderBottom} mt-6`}>
                 <div className={`${FeedOrderStyle.orderIngredients}`}>
-                    <div className={`${FeedOrderStyle.orderIngredient}`} style={{zIndex: '6'}}><img src="" alt="Ингредиент" /></div>
-                    <div className={`${FeedOrderStyle.orderIngredient}`} style={{zIndex: '5', transform: "translatex(-16px)"}}><img src="" alt="Ингредиент" /></div>
-                    <div className={`${FeedOrderStyle.orderIngredient}`} style={{zIndex: '4', transform: "translatex(-32px)"}}><img src="" alt="Ингредиент" /></div>
-                    <div className={`${FeedOrderStyle.orderIngredient}`} style={{zIndex: '3', transform: "translatex(-48px)"}}><img src="" alt="Ингредиент" /></div>
-                    <div className={`${FeedOrderStyle.orderIngredient}`} style={{zIndex: '2', transform: "translatex(-54px)"}}><img src="" alt="Ингредиент" /></div>
-                    <div className={`${FeedOrderStyle.orderIngredient}`} style={{zIndex: '1', transform: "translatex(-70px)"}}>
-                        <p className="text text_type_main-default">+3</p>
-                        <img src="" alt="Ингредиент" />
-                    </div>
+                    {order.ingredients.map((ingredient, idx) => 
+                        idx <= 5 && (<div 
+                            className={`${FeedOrderStyle.orderIngredient}`} 
+                            style={{
+                                zIndex: order.ingredients.length - idx,
+                                transform: `translateX(-${idx * 16}px)`
+                            }} >
+                                <img src={filterById(ingredient, ingredients)?.image_mobile} alt="Ингредиент" />
+                                {(idx === 5 && order.ingredients.length > 6) && <p className="text text_type_main-default">+{order.ingredients.length - 6}</p>}
+                        </div>)
+                    )}
                 </div>
                 <div className={FeedOrderStyle.orderCheck}>
-                    <p className="text text_type_digits-default">480</p>
+                    <p className="text text_type_digits-default">{sum()}</p>
                     <CurrencyIcon type="primary" />
                 </div>
             </div>
