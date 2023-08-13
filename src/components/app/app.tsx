@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import AppHeader from '../appHeader/app-header';
 import { Modal } from '../modal/modal';
 import { IngredientDetails } from '../ingredientDetails/ingredient-details';
@@ -16,31 +16,56 @@ import Profile, { ProfileOrdersHistory, ProfileUser } from "../../pages/profile"
 import {OnlyAuth, OnlyUnAuth} from '../protectedRoute';
 import Feed from "../../pages/feed";
 import { OrderDetailsWithIngredient } from "../orderDetailWithIngredient";
+import { useAppDispatch, useAppSelector } from "../../utils/chema";
+import { ws } from "../../utils/constants";
+import { WS_CONNECTION_CLOSED, WS_CONNECTION_START } from "../../services/actions/socket";
 
 export function App() {
-  const { order } = useSelector(
-    state => ({
-      // @ts-ignore
-      order: state.order.order,
-      // @ts-ignore
-      ingredients: state.ingredients.ingredients,
-      // @ts-ignore
-      selectIngredients: state.selectIngredients
-    })
-  );
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
   const location = useLocation();
   let state = location.state;
-  console.log('state', state)
-  React.useEffect(() => {
-    // @ts-ignore
+
+  const { order, orders } = useAppSelector(
+    store => ({
+      order: store.order.order,
+      orders: store.ws
+    })
+  );
+
+  const [isFeed, setIsFeed] = useState<Boolean>(false)
+  const wsUrl = ws + '/orders/all';
+  
+  useEffect(()=>{
+    if(isFeed) {
+      dispatch({
+          type: WS_CONNECTION_START,
+          payload: wsUrl
+      });
+
+      return () => {
+          dispatch({
+              type: WS_CONNECTION_CLOSED
+          });
+      };
+    }
+  },[isFeed])
+
+  useEffect(() => {
+    let feed_value;
+    if(state) {
+      const pathname = state["backgroundLocation"]["pathname"];
+      feed_value = pathname.split("/")[1];
+    }
+ 
+
     dispatch(getIngredients());
     if (localStorage.getItem("accessToken")) {
-      // @ts-ignore
       dispatch(getUser());
     } else {
-      // @ts-ignore
       dispatch(checkUserAuth());
+    }
+    if(feed_value === "feed" && !orders) {
+      setIsFeed(true);
     }
   }, [dispatch]);
 
@@ -68,10 +93,11 @@ export function App() {
           
              
         </main>
-        {console.log(state)}
+        
         {state?.backgroundLocation && (
             <Routes >
               <Route path="/ingredients/:id" element={<Modal ><IngredientDetails /></Modal>} />
+              <Route path="/feed/:id" element={<Modal ><OrderDetailsWithIngredient /></Modal>} />
             </Routes>
         )}
         {order &&

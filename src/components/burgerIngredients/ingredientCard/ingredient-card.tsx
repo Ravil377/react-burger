@@ -2,22 +2,11 @@ import { FC, useCallback } from 'react';
 import ingredientCardStyles from './ingredient-card.module.css';
 import { CurrencyIcon, Counter } from '@ya.praktikum/react-developer-burger-ui-components'
 import { filterById } from '../../../utils/utils';
-import { useSelector, useDispatch } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import { ADD_INGREDIENT_FOR_DETAIL } from '../../../services/actions/ingredient-details';
 import { useDrag } from "react-dnd";
 import { Link, useLocation } from 'react-router-dom';
-
-interface IIngredient {
-    _id: string;
-    name: string;
-    calories: number;
-    proteins: number;
-    fat: number;
-    carbohydrates: number;
-    image: string;
-    count?: number;
-    price: number;
-}
+import { IIngredient, useAppSelector } from '../../../utils/chema';
 
 interface IngredientCardProps {
     ingredient: IIngredient;
@@ -26,9 +15,8 @@ interface IngredientCardProps {
 export const IngredientCard:FC<IngredientCardProps> = ({ ingredient }) => {
     const dispatch = useDispatch();
     const location = useLocation();
-    let state = location.state;
-    // @ts-ignore
-    const { ingredients } = useSelector(state => state.ingredients);
+    
+    const { ingredients } = useAppSelector(store => store.ingredients);
     const [, dragRef] = useDrag({
         type: "ingredient",
         item: ingredient

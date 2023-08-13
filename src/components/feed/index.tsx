@@ -7,7 +7,7 @@ export const FeedList = () => {
 
     return (
         <div className={`${feedListStyle.list} custom-scroll`}>
-            {orders.map((order:TOrder, idx: number) => <FeedOrder order={order} key={idx}/> )}
+            {orders && orders.map((order:TOrder, idx: number) => <FeedOrder order={order} key={idx}/> )}
         </div>
     )
 }

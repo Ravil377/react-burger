@@ -1,7 +1,7 @@
-import { Link, useLocation, useParams } from 'react-router-dom'
+import { Link, useLocation } from 'react-router-dom'
 import OrderIngredientStyle from './OrderIngredient.module.css'
 import { CurrencyIcon } from '@ya.praktikum/react-developer-burger-ui-components';
-import { IIngredient, TOrder, useAppDispatch, useAppSelector } from '../../../utils/chema';
+import { IIngredient, useAppSelector } from '../../../utils/chema';
 import { FC, useCallback, useEffect, useState } from 'react';
 import { filterById } from '../../../utils/utils';
 import { ADD_INGREDIENT_FOR_DETAIL } from '../../../services/actions/ingredient-details';

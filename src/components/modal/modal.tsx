@@ -18,13 +18,13 @@ export const Modal: FC<IModalProps> = ({ children }) => {
     const dispatch = useDispatch();
     const navigate = useNavigate();
     const location = useLocation();
-    let state = location.state.backgroundLocation;
+    let state = location.state;
     const handleCloseBtnClick = () => modalClose();
 
     const modalClose = () => {
         dispatch({ type: REMOVE_INGREDIENT_FOR_DETAIL });
         dispatch({ type: REMOVE_ORDER });
-        navigate('/');
+        navigate(state ? state.backgroundLocation.pathname : '/');
     };
 
     useEffect(() => {

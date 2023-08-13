@@ -1,37 +1,60 @@
 import orderDetailsWithIngredientStyles from './orderDetailWithIngredient.module.css';
-import { start, wait } from '../../utils/constants';
+import { start, wait, ws } from '../../utils/constants';
 import success from "../../images/success.svg";
 import { useSelector } from 'react-redux';
-import { useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import { OrderIngredient } from './OrderIngredient'
 import { CurrencyIcon, FormattedDate } from '@ya.praktikum/react-developer-burger-ui-components';
-import { TOrder, useAppSelector } from '../../utils/chema';
+import { TOrder, useAppDispatch, useAppSelector } from '../../utils/chema';
 import { filterById, sum } from '../../utils/utils';
 import { useEffect, useState } from 'react';
+import { WS_CONNECTION_CLOSED, WS_CONNECTION_START } from '../../services/actions/socket';
 
 
 
 export const OrderDetailsWithIngredient = () => {
     const { orders } = useAppSelector(store => store.ws);
     const { ingredients } = useAppSelector(state => state.ingredients);
-
     const { id } = useParams();
     const [order, setOrder] = useState<TOrder>()
 
-    useEffect(() => {
-        if(id) {
-            const extractedId = parseInt(id.substring(1), 10);
-            setOrder(orders.find((item) => item.number === extractedId));
-        }
-    }, [id, orders])
+    const dispatch = useAppDispatch();
+    const wsUrl = ws + '/orders/all';
+    const navigate = useNavigate();
     
 
+    useEffect(()=>{
+        if(orders.length === 0) {
+            dispatch({
+                type: WS_CONNECTION_START,
+                payload: wsUrl
+            });
+    
+            return () => {
+                dispatch({
+                    type: WS_CONNECTION_CLOSED
+                });
+            };
+        }
+    },[])
+
+    useEffect(() => {
+  
+        if(id && orders) {
+            const extractedId = parseInt(id.substring(1), 10);
+            const ord = orders.find((item) => item.number === extractedId);
+            ord ? setOrder(ord) : navigate('/feed')
+        }
+
+    }, [id, orders])
+    
+    const isDone = order?.status === 'done';
 
     return (
         <div className={orderDetailsWithIngredientStyles.container}>
             <p className="text text_type_main-small" style={{textAlign: "center"}}>#{order?.number}</p>
             <p className="text text_type_main-medium mt-10" >{order?.name}</p>
-            <p className="text text_type_main-default mt-3" style={{color: "#00CCCC"}}>Выполнен</p>
+            <p className="text text_type_main-default mt-3" style={{color: "#00CCCC"}}>{isDone ? 'Выполнен' : 'Готовится'}</p>
             <p className="text text_type_main-medium mt-15" >Состав:</p>
             <div className={`${orderDetailsWithIngredientStyles.list} mt-6 custom-scroll pr-6 mb-10`}>
                 {order && order.ingredients.map((ingredient: string, idx) => <OrderIngredient id={ingredient} key={idx}/> )}

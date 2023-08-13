@@ -12,7 +12,6 @@ export const POST_REGISTER_SUCCESS: "POST_REGISTER_SUCCESS" = "POST_REGISTER_SUC
 export const POST_REGISTER_FAILED: "POST_REGISTER_FAILED" = "POST_REGISTER_FAILED";
 
 export const getUser = () => {
-  console.log('getUser')
   // @ts-ignore
   return (dispatch) => {
     return api.getUser(localStorage.getItem("accessToken"))
@@ -22,12 +21,19 @@ export const getUser = () => {
           type: SET_USER,
           user: res.user
         });
-      });
+      })
+      .catch((res) => {
+        localStorage.removeItem("accessToken");
+        localStorage.removeItem("refreshToken");
+        dispatch({
+          type: POST_REGISTER_FAILED,
+          err: res.err
+        });
+      })
   };
 };
 
 export const checkUserAuth = () => {
-  console.log('checkUserAuth')
   // @ts-ignore
   return (dispatch) => {
     if (localStorage.getItem("accessToken")) {

@@ -1,6 +1,6 @@
 import { CurrencyIcon, FormattedDate } from "@ya.praktikum/react-developer-burger-ui-components";
 import FeedOrderStyle from "./order.module.css";
-import { Link, useParams } from "react-router-dom";
+import { Link, useLocation, useParams } from "react-router-dom";
 import { TOrder, useAppSelector } from "../../../utils/chema";
 import { FC } from "react";
 import { filterById } from "../../../utils/utils";
@@ -13,7 +13,8 @@ export const FeedOrder:FC<IFeedOrderProps> = ({ order }) => {
     const { ingredients } = useAppSelector(state => state.ingredients);
     const { id } = useParams();
     const { name, number, updatedAt } = order;
-
+    const location = useLocation();
+    
     const sum = (): number => {
         let sum = 0;
         order.ingredients.map((ingredient) => {
@@ -26,6 +27,7 @@ export const FeedOrder:FC<IFeedOrderProps> = ({ order }) => {
     return (
         <Link  
             to={`/feed/:${number}`}
+            state={{backgroundLocation: location}}
             className={`${FeedOrderStyle.order} p-6`}>
             <div className={FeedOrderStyle.orderTop}>
                 <p className="text text_type_digits-default">#{number}</p>

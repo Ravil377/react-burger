@@ -3,8 +3,7 @@ import { FeedList } from "../components/feed";
 import { Stats } from "../components/feed/stats";
 import feedStyle from "./css/feed.module.css";
 import { useEffect } from "react";
-import feedListStyle from "./feed.module.css";
-import { useAppDispatch, useAppSelector } from "../utils/chema";
+import { useAppDispatch } from "../utils/chema";
 import { ws } from "../utils/constants";
 import { WS_CONNECTION_CLOSED, WS_CONNECTION_START } from "../services/actions/socket";
 
