@@ -1,5 +1,7 @@
+import { NavigateFunction } from 'react-router-dom';
 import api from '../../utils/api';
 import { 
+  AppDispatch,
   IForgotPasswordUserProps, 
   IPostLoginUser, 
   IResetPasswordUserProps, 
@@ -11,8 +13,7 @@ export const POST_LOADING_REGISTER: "POST_LOADING_REGISTER" = "POST_LOADING_REGI
 export const POST_REGISTER_SUCCESS: "POST_REGISTER_SUCCESS" = "POST_REGISTER_SUCCESS";
 export const POST_REGISTER_FAILED: "POST_REGISTER_FAILED" = "POST_REGISTER_FAILED";
 
-export const getUser = () => {
-  // @ts-ignore
+export function getUser(): (dispatch: AppDispatch) => void {
   return (dispatch) => {
     return api.getUser(localStorage.getItem("accessToken"))
       .then((res) => {
@@ -33,8 +34,7 @@ export const getUser = () => {
   };
 };
 
-export const checkUserAuth = () => {
-  // @ts-ignore
+export function checkUserAuth(): (dispatch: AppDispatch) => void {
   return (dispatch) => {
     if (localStorage.getItem("accessToken")) {
       api.refreshToken()
@@ -58,8 +58,7 @@ export const checkUserAuth = () => {
   };
 };
 
-export const patchUser = ({ email, password, name }: IUserProps) => {
-  // @ts-ignore
+export function patchUser({ email, password, name }: IUserProps): (dispatch: AppDispatch) => void {
   return function (dispatch) {
     dispatch({ type: POST_LOADING_REGISTER });
     api.patchUser(localStorage.getItem("accessToken"), email, name, password)
@@ -80,8 +79,7 @@ export const patchUser = ({ email, password, name }: IUserProps) => {
   };
 };
 
-export const postRegisterUser = ({ email, password, name }:IUserProps) => {
-  // @ts-ignore
+export function postRegisterUser({ email, password, name }:IUserProps): (dispatch: AppDispatch) => void {
   return function (dispatch) {
     dispatch({ type: POST_LOADING_REGISTER });
     api.register(email, password, name)
@@ -105,14 +103,13 @@ export const postRegisterUser = ({ email, password, name }:IUserProps) => {
 };
 
 
-export const resetPasswordUser = ({ password, token }: IResetPasswordUserProps, history: any) => {
-  // @ts-ignore
+export function resetPasswordUser({ password, token }: IResetPasswordUserProps, navigate: NavigateFunction): (dispatch: AppDispatch) => void {
   return function (dispatch) {
     dispatch({ type: POST_LOADING_REGISTER });
     api.resetPassword(password, token)
       .then(res => {
         if (res && res.success) {
-            history.push('/login');
+          navigate('/login');
         }
       })
       .catch(err =>
@@ -125,14 +122,13 @@ export const resetPasswordUser = ({ password, token }: IResetPasswordUserProps, 
 };
 
 
-export const forgotPasswordUser = ({ email }:IForgotPasswordUserProps, history: any) => {
-  // @ts-ignore
+export function forgotPasswordUser({ email }:IForgotPasswordUserProps, navigate: NavigateFunction): (dispatch: AppDispatch) => void {
   return function (dispatch) {
     dispatch({ type: POST_LOADING_REGISTER });
     api.forgotPassword(email)
       .then(res => {
         if (res && res.success) {
-          history.push('/reset-password');
+          navigate('/reset-password');
         }
       })
       .catch(err =>
@@ -144,8 +140,7 @@ export const forgotPasswordUser = ({ email }:IForgotPasswordUserProps, history: 
   };
 };
 
-export function postLoginUser({ email, password }:IPostLoginUser) {
-  // @ts-ignore
+export function postLoginUser({ email, password }:IPostLoginUser): (dispatch: AppDispatch) => void {
   return function (dispatch) {
     dispatch({ type: POST_LOADING_REGISTER });
     api.login(email, password)
@@ -168,8 +163,7 @@ export function postLoginUser({ email, password }:IPostLoginUser) {
   };
 }
 
-export function logOutUser() {
-  // @ts-ignore
+export function logOutUser(): (dispatch: AppDispatch) => void {
     return function (dispatch) {
       dispatch({ type: POST_LOADING_REGISTER });
       api.logOut(localStorage.getItem("refreshToken"))
@@ -178,8 +172,7 @@ export function logOutUser() {
             localStorage.removeItem("accessToken");
             localStorage.removeItem("refreshToken");
             dispatch({
-              type: POST_REGISTER_SUCCESS,
-              user: null
+              type: POST_REGISTER_SUCCESS
             });
           }
         })

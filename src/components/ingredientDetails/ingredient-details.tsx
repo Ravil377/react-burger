@@ -1,14 +1,12 @@
-import { useSelector } from 'react-redux';
 import { useParams } from 'react-router-dom';
 import { filterById } from '../../utils/utils';
 import { useState, useEffect } from 'react';
 import ingredientDetailStyles from './ingredient-details.module.css';
 import { titleDetail, caloriesDetail, proteinDetail, fatDetail, carbohydratesDetail } from '../../utils/constants';
-import { IIngredient } from '../../utils/chema';
+import { IIngredient, useAppSelector } from '../../utils/chema';
 
-export const IngredientDetails = () => {   
-    // @ts-ignore
-    const ingredients = useSelector(state => state.ingredients.ingredients);
+export const IngredientDetails = () => {
+    const ingredients = useAppSelector(store => store.ingredients.ingredients);
     const [ingredient, setIngredient] = useState<IIngredient | null>(null);
     const { id } = useParams();
 

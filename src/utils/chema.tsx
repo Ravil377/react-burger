@@ -8,6 +8,7 @@ import { TIngredientsActions } from "../services/reducers/ingredients";
 import { TOrderActions } from "../services/reducers/order";
 import { TUserActions } from "../services/reducers/user";
 import { TWSActions } from "../services/reducers/socket";
+import { NavigateFunction } from "react-router-dom";
 
 export type RootState = ReturnType<typeof store.getState>;
 export type AppDispatch = ThunkDispatch<RootState, never, TActions>;

@@ -4,14 +4,12 @@ import { EmailInput, PasswordInput, Button, Input } from '@ya.praktikum/react-de
 import { Link } from 'react-router-dom';
 import { Formik, Form, FormikHelpers } from 'formik';
 import * as Yup from 'yup';
-import { useSelector, useDispatch } from 'react-redux';
 import { postRegisterUser } from '../services/actions/user';
-import { IUserProps } from '../utils/chema';
+import { IUserProps, useAppDispatch, useAppSelector } from '../utils/chema';
 
 function Register() {
-    const dispatch = useDispatch();
-    // @ts-ignore
-    const { isLoading } = useSelector(state => state.user);
+    const dispatch = useAppDispatch();
+    const { isLoading } = useAppSelector(state => state.user);
 
     const initialValues = {
         email: '',
@@ -20,7 +18,6 @@ function Register() {
     };
    
     const handleSubmit = (values: IUserProps, formikHelpers: FormikHelpers<IUserProps>) => {
-        // @ts-ignore
         dispatch(postRegisterUser(values));
         formikHelpers.resetForm();
     }

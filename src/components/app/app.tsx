@@ -53,6 +53,7 @@ export function App() {
   useEffect(() => {
     let feed_value;
     if(state) {
+      console.log(state)
       const pathname = state["backgroundLocation"]["pathname"];
       feed_value = pathname.split("/")[1];
     }

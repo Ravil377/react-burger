@@ -16,10 +16,6 @@ interface IConstructorIngredientProps {
   index: number;
 }
 
-interface IDraggedItem {
-  index: number;
-}
-
 export const ConstructorIngredient: React.FC<IConstructorIngredientProps> = ({ component, index }) => {
     const dispatch = useDispatch();
     const ref = useRef<HTMLHeadingElement | null>(null);

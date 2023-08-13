@@ -31,7 +31,7 @@ export interface IPostLoadingRegisterAction {
 
 export interface IPostRegisterSuccessAction {
   type: typeof POST_REGISTER_SUCCESS;
-  user: IUser;
+  user?: IUser;
 }
 
 export interface IPostRegisterFailedAction {
@@ -71,7 +71,7 @@ export const userReducer = (state = userInitialState, action: TUserActions):IUse
               ...state,
               isLoading: false,
               isError: false,
-              user: action.user,
+              user: action.user || null,
               isSuccess: true,
               isAuthCheck: true,
           };

@@ -1,11 +1,9 @@
-import { useSelector } from 'react-redux';
 import { ConstructorIngredient } from '../constructor-ingredient/constructor-ingredient';
-import { IIngredient } from '../../../utils/chema';
+import { IIngredient, useAppSelector } from '../../../utils/chema';
 
 export const ConstructorList = () => {
-    const { selectIngredients } = useSelector(state => ({
-        // @ts-ignore
-        selectIngredients: state.selectIngredients.selectIngredients
+    const { selectIngredients } = useAppSelector(store => ({
+        selectIngredients: store.selectIngredients.selectIngredients
     }));  
     
     return (

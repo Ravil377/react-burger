@@ -3,7 +3,6 @@ import Container from '../components/container/container';
 import { EmailInput, PasswordInput, Input, Button } from '@ya.praktikum/react-developer-burger-ui-components'
 import { useNavigate, NavLink, Routes, Route, Outlet } from 'react-router-dom';
 import { logOutUser, patchUser } from '../services/actions/user';
-import { useDispatch, useSelector } from 'react-redux';
 import { Formik, Form, FormikHelpers } from 'formik';
 import * as Yup from 'yup';
 import { IUserProps, useAppDispatch, useAppSelector } from '../utils/chema';
@@ -45,13 +44,14 @@ export const ProfileOrdersHistory = () => {
 }
 
 export const ProfileUser = () => {
-    const dispatch = useDispatch();
-    // @ts-ignore
-    const user = useSelector( state => state.user.user );
+    const dispatch = useAppDispatch();
+
+    const user = useAppSelector( store => store.user.user );
+
     const initialValues = {
-        email: user.email,
+        email: user ? user.email : '',
         password: '',
-        name: user.name
+        name: user ? user.name : ''
     };
 
     const validationSchema = Yup.object().shape({
@@ -65,7 +65,6 @@ export const ProfileUser = () => {
     });
 
     const handleSubmit = (values: IUserProps, formikHelpers: FormikHelpers<IUserProps>) => {
-        // @ts-ignore
         dispatch(patchUser(values));
         formikHelpers.resetForm();
     }
@@ -122,10 +121,9 @@ export const ProfileUser = () => {
 
 function Profile() {
     const navigate = useNavigate();
-    const dispatch = useDispatch();
+    const dispatch = useAppDispatch();
 
     const onClick = () => {
-        // @ts-ignore
         dispatch(logOutUser());
         navigate('/login');
     }

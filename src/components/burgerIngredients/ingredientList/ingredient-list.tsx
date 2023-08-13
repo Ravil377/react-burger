@@ -1,9 +1,8 @@
 import ingredientListStyles from './ingredient-list.module.css';
 import { IngredientCard } from '../ingredientCard/ingredient-card';
 import { filterByType } from '../../../utils/utils';
-import { useSelector } from 'react-redux';
 import { FC, RefObject } from 'react';
-import { IIngredient } from '../../../utils/chema';
+import { IIngredient, useAppSelector } from '../../../utils/chema';
 
 interface IIngredientListProps {
     type: string;
@@ -12,8 +11,7 @@ interface IIngredientListProps {
 }
 
 export const IngredientList: FC<IIngredientListProps> = ({ type, title, componentRef }) => {
-    // @ts-ignore
-    const { ingredients } = useSelector(state => state.ingredients);
+    const { ingredients } = useAppSelector(store => store.ingredients);
 
     return (
         <>

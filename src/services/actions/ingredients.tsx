@@ -1,4 +1,5 @@
 import api from '../../utils/api';
+import { AppDispatch } from '../../utils/chema';
 
 export const GET_INGREDIENTS: "GET_INGREDIENTS" = "GET_INGREDIENTS";
 export const GET_INGREDIENTS_REQUEST: "GET_INGREDIENTS_REQUEST" = "GET_INGREDIENTS_REQUEST";
@@ -7,8 +8,7 @@ export const GET_INGREDIENTS_SUCCESS: "GET_INGREDIENTS_SUCCESS" = "GET_INGREDIEN
 export const INGREDIENT_INCREMENT: "INGREDIENT_INCREMENT" = "INGREDIENT_INCREMENT";
 export const INGREDIENT_DECREMENT: "INGREDIENT_DECREMENT" = "INGREDIENT_DECREMENT";
 
-export function getIngredients() {
-    // @ts-ignore
+export function getIngredients(): (dispatch: AppDispatch) => void {
     return function(dispatch) {
         dispatch({
             type: GET_INGREDIENTS_REQUEST

@@ -3,20 +3,17 @@ import Container from '../components/container/container';
 import { EmailInput, Button } from '@ya.praktikum/react-developer-burger-ui-components'
 import { Link, useNavigate } from 'react-router-dom';
 import { forgotPasswordUser } from '../services/actions/user';
-import { useSelector, useDispatch } from 'react-redux';
 import { Formik, Form } from 'formik';
 import * as Yup from 'yup';
-import { IForgotPasswordUserProps } from '../utils/chema';
+import { IForgotPasswordUserProps, useAppDispatch, useAppSelector } from '../utils/chema';
 
 function ForgotPassword() {
-    const dispatch = useDispatch();
-    // @ts-ignore
-    const { isLoading } = useSelector(state => state.user);
+    const dispatch = useAppDispatch();
+    const { isLoading } = useAppSelector(store => store.user);
     const navigate = useNavigate();
 
     const handleSubmit = (values: IForgotPasswordUserProps) => {
-        // @ts-ignore
-        dispatch(forgotPasswordUser(values));
+        dispatch(forgotPasswordUser(values, navigate));
         navigate('/reset-password');
     }
 

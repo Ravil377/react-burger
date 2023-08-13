@@ -6,18 +6,17 @@ import { resetPasswordUser } from '../services/actions/user';
 import { useSelector, useDispatch } from 'react-redux';
 import { Formik, Form } from 'formik';
 import * as Yup from 'yup';
-import { IResetPasswordUserProps } from '../utils/chema';
+import { IResetPasswordUserProps, useAppDispatch, useAppSelector } from '../utils/chema';
 
 
 function ResetPassword() {
-    const dispatch = useDispatch();
-    // @ts-ignore
-    const { isLoading } = useSelector(state => state.user);
+    const dispatch = useAppDispatch();
+    const { isLoading } = useAppSelector(state => state.user);
     const navigate = useNavigate();
 
+
     const handleSubmit = (values:IResetPasswordUserProps) => {
-        // @ts-ignore
-        dispatch(resetPasswordUser(values));
+        dispatch(resetPasswordUser(values, navigate));
         navigate('/login');
     }
 

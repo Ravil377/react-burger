@@ -3,19 +3,12 @@ import { HTML5Backend } from "react-dnd-html5-backend";
 import Container from '../components/container/container';
 import BurgerIngredients from '../components/burgerIngredients/burger-ingredients';
 import BurgerConstructor from '../components/burgerConstructor/burger-constructor';
-import { useSelector } from 'react-redux';
 import mainStyles from './css/main.module.css';
+import { useAppSelector } from "../utils/chema";
 
 function Main() {
-    // @ts-ignore
-    const {  ingredients, isLoading, isError } = useSelector(
-        state => ({
-          // @ts-ignore
-          ingredients: state.ingredients.ingredients,
-          // @ts-ignore
-          selectIngredients: state.selectIngredients
-        })
-    );
+    const {  data } = useAppSelector( store => ({ data: store.ingredients }));
+    const { isLoading, isError, ingredients } = data;
 
     return (
         <DndProvider backend={HTML5Backend}>

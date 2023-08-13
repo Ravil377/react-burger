@@ -1,6 +1,6 @@
-import { useSelector } from "react-redux";
 import { Navigate, useLocation } from "react-router-dom";
 import React, { FC } from "react";
+import { useAppSelector } from "../../utils/chema";
 
 interface ProtectedRouteProps {
   onlyAuth?: boolean;
@@ -8,10 +8,10 @@ interface ProtectedRouteProps {
 }
 
 const ProtectedRoute: FC<ProtectedRouteProps> = ({ onlyAuth = false, component }) => {
-  // @ts-ignore
-  const isAuthChecked = useSelector((state) => state.user.isAuthCheck);
-  // @ts-ignore
-  const user = useSelector((state) => state.user.user);
+
+  const isAuthChecked = useAppSelector((state) => state.user.isAuthCheck);
+
+  const user = useAppSelector((state) => state.user.user);
   const location = useLocation();
 
   if (!isAuthChecked) {

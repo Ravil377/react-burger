@@ -1,5 +1,5 @@
 import api from '../../utils/api';
-import { IIngredient } from '../../utils/chema';
+import { AppDispatch, IIngredient } from '../../utils/chema';
 
 export const GET_ORDER: "GET_ORDER" = "GET_ORDER";
 export const GET_ORDER_REQUEST: "GET_ORDER_REQUEST" = "GET_ORDER_REQUEST";
@@ -7,8 +7,7 @@ export const GET_ORDER_FAILED: "GET_ORDER_FAILED" = "GET_ORDER_FAILED";
 export const GET_ORDER_SUCCESS: "GET_ORDER_SUCCESS" = "GET_ORDER_SUCCESS";
 export const REMOVE_ORDER: "REMOVE_ORDER" = "REMOVE_ORDER";
 
-export function getOrder(ingredients: IIngredient[]) {
-  // @ts-ignore
+export function getOrder(ingredients: IIngredient[]): (dispatch: AppDispatch) => void {
   return function(dispatch) {
     dispatch({ type: GET_ORDER_REQUEST });
     api.postOrder(localStorage.getItem("accessToken"), ingredients.map((item) => item._id))

@@ -4,26 +4,24 @@ import { Bun } from './bun/bun';
 import { ConstructorList } from './constructorList/constructor-list';
 import { filterByType, checkBun } from '../../utils/utils';
 import { getOrder } from '../../services/actions/order';
-import { useSelector, useDispatch } from 'react-redux';
 import { useDrop } from "react-dnd";
 import { ADD_INGREDIENT } from '../../services/actions/burger-constructor';
 import { INGREDIENT_INCREMENT, INGREDIENT_DECREMENT } from '../../services/actions/ingredients';
 import { v4 as uuidv4 } from 'uuid';
 import { useNavigate } from 'react-router-dom';
-import { IIngredient } from '../../utils/chema';
+import { IIngredient, useAppDispatch, useAppSelector } from '../../utils/chema';
 
 function BurgerConstructor() {
-    const dispatch = useDispatch();
+    const dispatch = useAppDispatch();
     const navigate = useNavigate();
     
-    const { selectIngred } = useSelector(state => ({
-        // @ts-ignore
-        selectIngred: state.selectIngredients
-    }));
-    // @ts-ignore
-    const isAuthChecked = useSelector( state => state.user.isAuthCheck );
-    // @ts-ignore
-    const user = useSelector( state => state.user.user );
+    const { selectIngred, user } = useAppSelector( state => ({ 
+        selectIngred: state.selectIngredients,
+        user: state.user.user
+    }) );
+
+    const isAuthChecked = useAppSelector( state => state.user.isAuthCheck );
+
     const { selectIngredients, order } = selectIngred;
 
     const [, dropTarget] = useDrop({
@@ -38,7 +36,7 @@ function BurgerConstructor() {
                 prevBun = selectIngredients[isBunPrevState];
             }
             dispatch({ type: ADD_INGREDIENT, ingredient: {...item, key: key} });
-            if (isBun && isBunPrevState !== -1) {
+            if (isBun && isBunPrevState !== -1 && prevBun) {
                 dispatch({ type: INGREDIENT_INCREMENT, id: item._id });
                 dispatch({ type: INGREDIENT_DECREMENT, id: prevBun._id });
             } else {
@@ -50,7 +48,6 @@ function BurgerConstructor() {
 
     const handleClickOrderBtn = () => {
         if(isAuthChecked && user) {
-            // @ts-ignore
             dispatch(getOrder(selectIngredients));    
         } else {
             navigate('/login')

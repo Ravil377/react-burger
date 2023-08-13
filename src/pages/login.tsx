@@ -4,13 +4,12 @@ import { EmailInput, PasswordInput, Button } from '@ya.praktikum/react-developer
 import { Link } from 'react-router-dom';
 import { Formik, Form, FormikHelpers } from 'formik';
 import * as Yup from 'yup';
-import { useSelector, useDispatch } from 'react-redux';
 import { postLoginUser } from '../services/actions/user';
-import { IPostLoginUser } from '../utils/chema';
+import { IPostLoginUser, useAppDispatch, useAppSelector } from '../utils/chema';
+
 function Login() {
-  // @ts-ignore
-  const { isLoading } = useSelector((state) => state.user);
-  const dispatch = useDispatch();
+  const { isLoading } = useAppSelector((store) => store.user);
+  const dispatch = useAppDispatch();
 
   const initialValues: IPostLoginUser = {
     email: '',
@@ -26,7 +25,6 @@ function Login() {
   });
 
   const handleSubmit = (values: IPostLoginUser, formikHelpers: FormikHelpers<IPostLoginUser>) => {
-    // @ts-ignore
     dispatch(postLoginUser(values));
     formikHelpers.resetForm();
   }
