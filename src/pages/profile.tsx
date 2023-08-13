@@ -6,10 +6,37 @@ import { logOutUser, patchUser } from '../services/actions/user';
 import { useDispatch, useSelector } from 'react-redux';
 import { Formik, Form, FormikHelpers } from 'formik';
 import * as Yup from 'yup';
-import { IUserProps } from '../utils/chema';
+import { IUserProps, useAppDispatch, useAppSelector } from '../utils/chema';
 import { FeedList } from '../components/feed';
+import { ws } from '../utils/constants';
+import { useEffect } from 'react';
+import { WS_CONNECTION_CLOSED, WS_CONNECTION_START } from '../services/actions/socket';
 
 export const ProfileOrdersHistory = () => {
+    const { orders } = useAppSelector(store => store.ws);
+    const dispatch = useAppDispatch();
+    const token = localStorage.getItem("accessToken");
+    let tokenValue;
+    if(token) {
+        const parts = token.split(' ');
+        tokenValue = parts[1];
+    }
+
+    const wsUrl = ws + `/orders?token=${tokenValue}`;
+
+    useEffect(() => {
+        dispatch({
+            type: WS_CONNECTION_START,
+            payload: wsUrl
+        });
+
+        return () => {
+            dispatch({
+                type: WS_CONNECTION_CLOSED
+            });
+        };
+    }, [dispatch, wsUrl]);
+
     return (
         <div>
             <FeedList />

@@ -11,7 +11,7 @@ export function getOrder(ingredients: IIngredient[]) {
   // @ts-ignore
   return function(dispatch) {
     dispatch({ type: GET_ORDER_REQUEST });
-    api.postOrder(ingredients.map((item) => item._id))
+    api.postOrder(localStorage.getItem("accessToken"), ingredients.map((item) => item._id))
       .then(res => {
         if (res && res.success) {
           dispatch({

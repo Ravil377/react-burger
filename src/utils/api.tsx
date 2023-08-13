@@ -65,10 +65,13 @@ class Api {
             body: JSON.stringify({ email: email, name: name, password: password })
         }) 
 
-    postOrder = (ingredients: string[]) => this._request(`${this._options.baseUrl}/orders `, 
+    postOrder = (accessToken: string | null, ingredients: string[]) => this._request(`${this._options.baseUrl}/orders `, 
         {
             method: "POST",
-            headers: { "Content-Type": "application/json" },
+            headers: { 
+                "Content-Type": "application/json",
+                "Authorization": accessToken 
+            },
             body: JSON.stringify({ ingredients })
         })
 

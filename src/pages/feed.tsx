@@ -9,7 +9,6 @@ import { ws } from "../utils/constants";
 import { WS_CONNECTION_CLOSED, WS_CONNECTION_START } from "../services/actions/socket";
 
 const Feed = () => {
-    const { orders } = useAppSelector(store => store.ws);
     const dispatch = useAppDispatch();
     const wsUrl = ws + '/orders/all';
 
