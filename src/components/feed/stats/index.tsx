@@ -19,13 +19,13 @@ export const Stats = () => {
                 <div>
                     <p className="text text_type_main-medium mb-6">Готовы:</p>
                     <ul className={statsStyle.list} >
-                        {ready.map(order => <li className="text text_type_digits-default"><Link to={`/feed/:${order.number}`} >{order.number}</Link></li>)}
+                        {ready.map(order => <li key={order._id} className="text text_type_digits-default"><Link to={`/feed/:${order.number}`} >{order.number}</Link></li>)}
                     </ul>
                 </div>
                 <div>
                     <p className="text text_type_main-medium mb-6">В работе:</p>
                     <ul>
-                        {progress.map(order => <li className="text text_type_digits-default"><Link to={`/feed/:${order.number}`} >{order.number}</Link></li>)}
+                        {progress.map(order => <li key={order._id} className="text text_type_digits-default"><Link to={`/feed/:${order.number}`} >{order.number}</Link></li>)}
                     </ul>
                 </div>
 

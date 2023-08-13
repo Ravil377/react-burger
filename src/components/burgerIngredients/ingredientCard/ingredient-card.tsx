@@ -48,7 +48,7 @@ export const IngredientCard:FC<IngredientCardProps> = ({ ingredient }) => {
             onClick={handleIngredientClick} 
             id={ingredient._id} 
             state={{backgroundLocation: location}}
-            >
+        >
             {(ingredient.count !=0 && ingredient.count) && <Counter count={ingredient.count} size="default" extraClass="m-1" />}
             <img src={ingredient.image} alt={ingredient.name} />
             <p className={`text text_type_digits-default ${ingredientCardStyles.price}`}>{ingredient.price}<CurrencyIcon type="primary" /></p>

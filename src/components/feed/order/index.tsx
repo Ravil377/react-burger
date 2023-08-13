@@ -37,6 +37,7 @@ export const FeedOrder:FC<IFeedOrderProps> = ({ order }) => {
                     {order.ingredients.map((ingredient, idx) => 
                         idx <= 5 && (<div 
                             className={`${FeedOrderStyle.orderIngredient}`} 
+                            key={idx}
                             style={{
                                 zIndex: order.ingredients.length - idx,
                                 transform: `translateX(-${idx * 16}px)`

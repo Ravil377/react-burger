@@ -31,7 +31,7 @@ export function App() {
   const dispatch = useDispatch();
   const location = useLocation();
   let state = location.state;
-
+  console.log('state', state)
   React.useEffect(() => {
     // @ts-ignore
     dispatch(getIngredients());
@@ -68,12 +68,12 @@ export function App() {
           
              
         </main>
+        {console.log(state)}
         {state?.backgroundLocation && (
             <Routes >
               <Route path="/ingredients/:id" element={<Modal ><IngredientDetails /></Modal>} />
             </Routes>
         )}
-        
         {order &&
           <Modal >
             <OrderDetails />

@@ -12,6 +12,7 @@ export const POST_REGISTER_SUCCESS: "POST_REGISTER_SUCCESS" = "POST_REGISTER_SUC
 export const POST_REGISTER_FAILED: "POST_REGISTER_FAILED" = "POST_REGISTER_FAILED";
 
 export const getUser = () => {
+  console.log('getUser')
   // @ts-ignore
   return (dispatch) => {
     return api.getUser(localStorage.getItem("accessToken"))
@@ -26,6 +27,7 @@ export const getUser = () => {
 };
 
 export const checkUserAuth = () => {
+  console.log('checkUserAuth')
   // @ts-ignore
   return (dispatch) => {
     if (localStorage.getItem("accessToken")) {

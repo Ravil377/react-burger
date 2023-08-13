@@ -6,7 +6,7 @@ import { ModalOverlay } from '../modalOverlay/modal-overlay';
 import { REMOVE_INGREDIENT_FOR_DETAIL } from '../../services/actions/ingredient-details';
 import { REMOVE_ORDER } from '../../services/actions/order';
 import { useDispatch } from 'react-redux';
-import { useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 
 const modalRoot = document.getElementById("modal");
 
@@ -17,7 +17,8 @@ interface IModalProps {
 export const Modal: FC<IModalProps> = ({ children }) => {
     const dispatch = useDispatch();
     const navigate = useNavigate();
-
+    const location = useLocation();
+    let state = location.state.backgroundLocation;
     const handleCloseBtnClick = () => modalClose();
 
     const modalClose = () => {
