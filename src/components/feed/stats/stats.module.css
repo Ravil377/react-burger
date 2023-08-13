@@ -1,0 +1,22 @@
+.stats {
+    grid-area: orders;
+    display: flex;
+    flex-direction: column;
+    row-gap: 60px;
+}
+
+.numbers {
+    display: flex;
+    column-gap: 36px;
+    
+}
+
+.numbers ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+.numbers ul li a {
+    color: #0CC;
+    text-decoration: unset;
+}

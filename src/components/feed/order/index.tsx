@@ -1,10 +1,13 @@
 import { CurrencyIcon } from "@ya.praktikum/react-developer-burger-ui-components";
 import FeedOrderStyle from "./order.module.css";
+import { Link, useParams } from "react-router-dom";
 
 export const FeedOrder = () => {
-
+    const { id } = useParams();
     return (
-        <div className={`${FeedOrderStyle.order} p-6`}>
+        <Link  
+            to={`/feed/:034535`}
+            className={`${FeedOrderStyle.order} p-6`}>
             <div className={FeedOrderStyle.orderTop}>
                 <p className="text text_type_digits-default">#034535</p>
                 <p className="text text_type_main-default text_color_inactive">Сегодня, 16:20</p>
@@ -27,6 +30,6 @@ export const FeedOrder = () => {
                     <CurrencyIcon type="primary" />
                 </div>
             </div>
-        </div>
+        </Link>
     )
 }

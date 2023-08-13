@@ -12,9 +12,10 @@ import Login from '../../pages/login';
 import Register from '../../pages/register';
 import ForgotPassword from "../../pages/forgot-password";
 import ResetPassword from "../../pages/reset-password";
-import Profile from "../../pages/profile";
+import Profile, { ProfileOrdersHistory, ProfileUser } from "../../pages/profile";
 import {OnlyAuth, OnlyUnAuth} from '../protectedRoute';
 import Feed from "../../pages/feed";
+import { OrderDetailsWithIngredient } from "../orderDetailWithIngredient";
 
 export function App() {
   const { order } = useSelector(
@@ -54,21 +55,25 @@ export function App() {
             <Route path="/feed" element={<Feed />}/>
             <Route path="/ingredients/:id" element={<IngredientDetails />} />
             <Route path="/login" element={<OnlyUnAuth component={<Login />}/>}/>
-            
+            <Route path="/feed/:id" element={<OrderDetailsWithIngredient />} />
+            <Route path="/profile/orders/:id" element={<OrderDetailsWithIngredient />} />
             <Route path="/register" element={<OnlyUnAuth component={<Register />}/>}/>
             <Route path="/forgot-password" element={<OnlyUnAuth component={<ForgotPassword />}/>}/>
             <Route path="/reset-password" element={<OnlyUnAuth component={<ResetPassword />}/>}/>
-            <Route 
-              path="/profile" 
-              element={<OnlyAuth component={<Profile />}/>}
-            />
-          </Routes>          
+            <Route path="/profile" element={<OnlyAuth component={<Profile />}/>}>
+                <Route index element={<ProfileUser />} />
+                <Route path="orders" element={<ProfileOrdersHistory />} />
+            </Route>
+          </Routes>       
+          
+             
         </main>
         {state?.backgroundLocation && (
             <Routes >
               <Route path="/ingredients/:id" element={<Modal ><IngredientDetails /></Modal>} />
             </Routes>
         )}
+        
         {order &&
           <Modal >
             <OrderDetails />

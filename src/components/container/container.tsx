@@ -7,9 +7,7 @@ interface IContainerProps {
 const Container: React.FC<IContainerProps> = (props) => {
     return (
         <div className={containerStyles.outer}>
-            <div className={containerStyles.inner}>
-                {props.children}
-            </div>
+            {props.children}
         </div>
     );
 }
