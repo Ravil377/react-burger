@@ -13,7 +13,7 @@ export const FeedOrder:FC<IFeedOrderProps> = ({ order }) => {
     const { ingredients } = useAppSelector(state => state.ingredients);
     const { id } = useParams();
     const { name, number, updatedAt } = order;
-    
+
     const sum = (): number => {
         let sum = 0;
         order.ingredients.map((ingredient) => {
@@ -25,7 +25,7 @@ export const FeedOrder:FC<IFeedOrderProps> = ({ order }) => {
 
     return (
         <Link  
-            to={`/feed/:034535`}
+            to={`/feed/:${number}`}
             className={`${FeedOrderStyle.order} p-6`}>
             <div className={FeedOrderStyle.orderTop}>
                 <p className="text text_type_digits-default">#{number}</p>

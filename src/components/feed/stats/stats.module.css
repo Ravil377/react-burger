@@ -11,12 +11,17 @@
     
 }
 
-.numbers ul {
+.numbers > div > ul {
     list-style: none;
     margin: 0;
     padding: 0;
+    display: grid;
+    grid-template-rows: repeat(10, 1fr);
+    grid-auto-flow: column;
+    column-gap: 20px;
 }
 .numbers ul li a {
     color: #0CC;
     text-decoration: unset;
 }
+
