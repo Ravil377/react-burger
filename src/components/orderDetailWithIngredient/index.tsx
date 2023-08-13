@@ -48,13 +48,24 @@ export const OrderDetailsWithIngredient = () => {
 
     }, [id, orders])
     
-    const isDone = order?.status === 'done';
+    const statusInfo = (status: string) => { 
+        switch (status) { 
+          case "done": 
+            return "Готов"; 
+          case "created": 
+            return "Создан"; 
+          case "pending": 
+            return "Готовится"; 
+          default: 
+            return status; 
+        } 
+    };
 
     return (
         <div className={orderDetailsWithIngredientStyles.container}>
             <p className="text text_type_main-small" style={{textAlign: "center"}}>#{order?.number}</p>
             <p className="text text_type_main-medium mt-10" >{order?.name}</p>
-            <p className="text text_type_main-default mt-3" style={{color: "#00CCCC"}}>{isDone ? 'Выполнен' : 'Готовится'}</p>
+            <p className="text text_type_main-default mt-3" style={{color: "#00CCCC"}}>{order?.status && statusInfo(order?.status)}</p>
             <p className="text text_type_main-medium mt-15" >Состав:</p>
             <div className={`${orderDetailsWithIngredientStyles.list} mt-6 custom-scroll pr-6 mb-10`}>
                 {order && order.ingredients.map((ingredient: string, idx) => <OrderIngredient id={ingredient} key={idx}/> )}
