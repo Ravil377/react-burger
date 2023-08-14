@@ -12,13 +12,15 @@ import Login from '../../pages/login';
 import Register from '../../pages/register';
 import ForgotPassword from "../../pages/forgot-password";
 import ResetPassword from "../../pages/reset-password";
-import Profile, { ProfileOrdersHistory, ProfileUser } from "../../pages/profile";
+import Profile from "../../pages/profile";
 import {OnlyAuth, OnlyUnAuth} from '../protectedRoute';
 import Feed from "../../pages/feed";
 import { OrderDetailsWithIngredient } from "../orderDetailWithIngredient";
 import { useAppDispatch, useAppSelector } from "../../utils/chema";
 import { ws } from "../../utils/constants";
 import { WS_CONNECTION_CLOSED, WS_CONNECTION_START } from "../../services/actions/socket";
+import { ProfileUser } from "../profile/ProfileUser";
+import { ProfileOrdersHistory } from "../profile/ProfileOrdersHistory";
 
 export function App() {
   const dispatch = useAppDispatch();
@@ -53,7 +55,6 @@ export function App() {
   useEffect(() => {
     let feed_value;
     if(state) {
-      console.log(state)
       const pathname = state["backgroundLocation"]["pathname"];
       feed_value = pathname.split("/")[1];
     }
@@ -96,9 +97,10 @@ export function App() {
         </main>
         
         {state?.backgroundLocation && (
-            <Routes >
-              <Route path="/ingredients/:id" element={<Modal ><IngredientDetails /></Modal>} />
-              <Route path="/feed/:id" element={<Modal ><OrderDetailsWithIngredient /></Modal>} />
+            <Routes>
+              <Route path="/ingredients/:id" element={<Modal><IngredientDetails /></Modal>} />
+              <Route path="/feed/:id" element={<Modal><OrderDetailsWithIngredient /></Modal>} />
+              <Route path="/profile/orders/:id" element={<Modal><OrderDetailsWithIngredient /></Modal>} />
             </Routes>
         )}
         {order &&

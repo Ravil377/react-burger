@@ -6,17 +6,20 @@ export const socketMiddleware = (wsActions: TWS): Middleware => {
 
     return ((store: MiddlewareAPI<AppDispatch, RootState>) => {
         let socket: WebSocket | null = null;
+        let connected = false;
 
         return next => (action: TWSActions) => {
             const { dispatch } = store;
             const { type } = action;
             const { wsInit, onOpen, onClose, onError, onMessage } = wsActions;
 
-            if (type === wsInit) {
+            if (type === wsInit && !connected) {
                 socket = new WebSocket(action.payload);
             }
 
             if (socket) {
+                connected = true;
+
                 socket.onopen = (event) => {
                     dispatch({ type: onOpen, payload: event });
                 }
@@ -35,6 +38,11 @@ export const socketMiddleware = (wsActions: TWS): Middleware => {
                     dispatch({ type: onClose, payload: event });
                 }
             }
+
+			if (type === onClose) {
+				socket?.close(1000, 'socket closed');
+				connected = false;
+			}
 
             next(action);
         };

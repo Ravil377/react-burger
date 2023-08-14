@@ -14,7 +14,7 @@ export const FeedOrder:FC<IFeedOrderProps> = ({ order }) => {
     const { id } = useParams();
     const { name, number, updatedAt } = order;
     const location = useLocation();
-    
+
     const sum = (): number => {
         let sum = 0;
         order.ingredients.map((ingredient) => {
@@ -26,7 +26,7 @@ export const FeedOrder:FC<IFeedOrderProps> = ({ order }) => {
 
     return (
         <Link  
-            to={`/feed/:${number}`}
+            to={`${location.pathname}/:${number}`}
             state={{backgroundLocation: location}}
             className={`${FeedOrderStyle.order} p-6`}>
             <div className={FeedOrderStyle.orderTop}>

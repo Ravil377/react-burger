@@ -43,7 +43,7 @@ export const OrderDetailsWithIngredient = () => {
         if(id && orders) {
             const extractedId = parseInt(id.substring(1), 10);
             const ord = orders.find((item) => item.number === extractedId);
-            ord ? setOrder(ord) : navigate('/feed')
+            setOrder(ord);
         }
 
     }, [id, orders])
