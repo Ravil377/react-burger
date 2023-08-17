@@ -1,5 +1,5 @@
 import { ThunkDispatch } from "redux-thunk";
-import { WS_CONNECTION_CLOSED, WS_CONNECTION_ERROR, WS_CONNECTION_START, WS_CONNECTION_SUCCESS, WS_GET_MESSAGE } from "../services/actions/socket";
+import { WS_CONNECTION_CLOSED, WS_CONNECTION_ERROR, WS_CONNECTION_START, WS_CONNECTION_STOP, WS_CONNECTION_SUCCESS, WS_GET_MESSAGE } from "../services/actions/socket";
 import store from "../store/store";
 import { TypedUseSelectorHook, useDispatch, useSelector } from "react-redux";
 import { TIngredientActions } from "../services/reducers/burger-constructor";
@@ -8,7 +8,6 @@ import { TIngredientsActions } from "../services/reducers/ingredients";
 import { TOrderActions } from "../services/reducers/order";
 import { TUserActions } from "../services/reducers/user";
 import { TWSActions } from "../services/reducers/socket";
-import { NavigateFunction } from "react-router-dom";
 
 export type RootState = ReturnType<typeof store.getState>;
 export type AppDispatch = ThunkDispatch<RootState, never, TActions>;
@@ -88,6 +87,7 @@ export type TWSMessage = {
 
 export const wsActions = {
     wsInit: WS_CONNECTION_START,
+    wsStop: WS_CONNECTION_STOP,
     onOpen: WS_CONNECTION_SUCCESS,
     onClose: WS_CONNECTION_CLOSED,
     onError: WS_CONNECTION_ERROR,
@@ -96,6 +96,7 @@ export const wsActions = {
 
 export type TWS = {
     wsInit: typeof WS_CONNECTION_START;
+    wsStop: typeof WS_CONNECTION_STOP;
     onOpen: typeof WS_CONNECTION_SUCCESS;
     onClose: typeof WS_CONNECTION_CLOSED;
     onError: typeof WS_CONNECTION_ERROR;

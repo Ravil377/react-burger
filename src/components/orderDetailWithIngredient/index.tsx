@@ -8,7 +8,7 @@ import { CurrencyIcon, FormattedDate } from '@ya.praktikum/react-developer-burge
 import { TOrder, useAppDispatch, useAppSelector } from '../../utils/chema';
 import { filterById, sum } from '../../utils/utils';
 import { useEffect, useState } from 'react';
-import { WS_CONNECTION_CLOSED, WS_CONNECTION_START } from '../../services/actions/socket';
+import { WS_CONNECTION_CLOSED, WS_CONNECTION_START, WS_CONNECTION_STOP } from '../../services/actions/socket';
 
 
 
@@ -32,7 +32,7 @@ export const OrderDetailsWithIngredient = () => {
     
             return () => {
                 dispatch({
-                    type: WS_CONNECTION_CLOSED
+                    type: WS_CONNECTION_STOP
                 });
             };
         }

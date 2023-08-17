@@ -11,7 +11,7 @@ export const socketMiddleware = (wsActions: TWS): Middleware => {
         return next => (action: TWSActions) => {
             const { dispatch } = store;
             const { type } = action;
-            const { wsInit, onOpen, onClose, onError, onMessage } = wsActions;
+            const { wsInit, wsStop, onOpen, onClose, onError, onMessage } = wsActions;
 
             if (type === wsInit && !connected) {
                 socket = new WebSocket(action.payload);
@@ -19,13 +19,13 @@ export const socketMiddleware = (wsActions: TWS): Middleware => {
 
             if (socket) {
                 connected = true;
-
                 socket.onopen = (event) => {
                     dispatch({ type: onOpen, payload: event });
                 }
 
                 socket.onerror = (event) => {
                     dispatch({ type: onError, payload: event });
+                    connected = false;
                 }
 
                 socket.onmessage = (event) => {
@@ -35,14 +35,21 @@ export const socketMiddleware = (wsActions: TWS): Middleware => {
                 }
 
                 socket.onclose = (event) => {
-                    dispatch({ type: onClose, payload: event });
+                    dispatch({ type: onClose });
+                    if (connected) {
+                        console.log('реконект')
+                        setTimeout(() => {
+                            dispatch({ type: onOpen, payload: event });
+                        }, 1000);
+                    }
                 }
+                
             }
 
-			if (type === onClose) {
-				socket?.close(1000, 'socket closed');
-				connected = false;
-			}
+            if (type === wsStop && socket) {
+                socket.close();
+                connected = false;
+            }
 
             next(action);
         };

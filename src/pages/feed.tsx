@@ -5,13 +5,13 @@ import feedStyle from "./css/feed.module.css";
 import { useEffect } from "react";
 import { useAppDispatch } from "../utils/chema";
 import { ws } from "../utils/constants";
-import { WS_CONNECTION_CLOSED, WS_CONNECTION_START } from "../services/actions/socket";
+import { WS_CONNECTION_CLOSED, WS_CONNECTION_START, WS_CONNECTION_STOP } from "../services/actions/socket";
 
 const Feed = () => {
     const dispatch = useAppDispatch();
     const wsUrl = ws + '/orders/all';
 
-    useEffect(() => {
+    useEffect(() => {        
         dispatch({
             type: WS_CONNECTION_START,
             payload: wsUrl
@@ -19,10 +19,10 @@ const Feed = () => {
 
         return () => {
             dispatch({
-                type: WS_CONNECTION_CLOSED
+                type: WS_CONNECTION_STOP
             });
         };
-    }, [dispatch, wsUrl]);
+    }, []);
     
     return (
         <Container >

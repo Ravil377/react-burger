@@ -1,9 +1,12 @@
 import { TOrder, TWSMessage } from "../../utils/chema";
-import { WS_CONNECTION_CLOSED, WS_CONNECTION_ERROR, WS_CONNECTION_START, WS_CONNECTION_SUCCESS, WS_GET_MESSAGE } from "../actions/socket";
+import { WS_CONNECTION_CLOSED, WS_CONNECTION_ERROR, WS_CONNECTION_START, WS_CONNECTION_STOP, WS_CONNECTION_SUCCESS, WS_GET_MESSAGE } from "../actions/socket";
 
 export interface IWSConnectionStartAction {
     readonly type: typeof WS_CONNECTION_START;
     readonly payload: string;
+}
+export interface IWSConnectionStopAction {
+    readonly type: typeof WS_CONNECTION_STOP;
 }
 
 export interface IWSConnectionSuccessAction {
@@ -27,6 +30,7 @@ export interface IWSGetMessageAction {
 
 export type TWSActions =
     | IWSConnectionStartAction
+    | IWSConnectionStopAction
     | IWSConnectionSuccessAction
     | IWSConnectionErrorAction
     | IWSConnectionClosedAction

@@ -18,7 +18,7 @@ import Feed from "../../pages/feed";
 import { OrderDetailsWithIngredient } from "../orderDetailWithIngredient";
 import { useAppDispatch, useAppSelector } from "../../utils/chema";
 import { ws } from "../../utils/constants";
-import { WS_CONNECTION_CLOSED, WS_CONNECTION_START } from "../../services/actions/socket";
+import { WS_CONNECTION_CLOSED, WS_CONNECTION_START, WS_CONNECTION_STOP } from "../../services/actions/socket";
 import { ProfileUser } from "../profile/ProfileUser";
 import { ProfileOrdersHistory } from "../profile/ProfileOrdersHistory";
 
@@ -46,7 +46,7 @@ export function App() {
 
       return () => {
           dispatch({
-              type: WS_CONNECTION_CLOSED
+              type: WS_CONNECTION_STOP
           });
       };
     }

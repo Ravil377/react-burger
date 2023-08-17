@@ -1,5 +1,5 @@
 import { useEffect } from "react";
-import { WS_CONNECTION_CLOSED, WS_CONNECTION_START } from "../../../services/actions/socket";
+import { WS_CONNECTION_CLOSED, WS_CONNECTION_START, WS_CONNECTION_STOP } from "../../../services/actions/socket";
 import { FeedList } from "../../feed";
 import { ws } from "../../../utils/constants";
 import { useAppDispatch, useAppSelector } from "../../../utils/chema";
@@ -24,7 +24,7 @@ export const ProfileOrdersHistory = () => {
 
         return () => {
             dispatch({
-                type: WS_CONNECTION_CLOSED
+                type: WS_CONNECTION_STOP
             });
         };
     }, [dispatch, wsUrl]);
