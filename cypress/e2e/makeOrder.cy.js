@@ -1,6 +1,6 @@
 describe('ingredient modal is working', () => {
     before(function() {
-        cy.visit('http://localhost:3000');
+        cy.visit('/');
     });
 
     it('make order is working', function() {
