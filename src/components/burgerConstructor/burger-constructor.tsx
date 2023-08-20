@@ -56,7 +56,7 @@ function BurgerConstructor() {
     }
  
     return (
-        <section className={`custom-scroll ${burgerConstructorStyles.constructor}`} ref={dropTarget} >
+        <section data-testid="constructor" className={`custom-scroll ${burgerConstructorStyles.constructor}`} ref={dropTarget} >
             {checkBun(selectIngredients) !== -1 && <Bun bun={filterByType('bun', selectIngredients)} positionText="(верх)" position={"top"} />}
             <div className={`custom-scroll mt-4 mb-4 pr-4 ${burgerConstructorStyles.list}`} >
             {selectIngredients && <ConstructorList />}
@@ -66,7 +66,7 @@ function BurgerConstructor() {
                 <p className={`text text_type_digits-medium ${burgerConstructorStyles.result}`}>{order} 
                     <CurrencyIcon type="primary" />
                 </p>
-                <Button htmlType="button" type="primary" size="large" onClick={handleClickOrderBtn}>
+                <Button data-testid="makeOrder" htmlType="button" type="primary" size="large" onClick={handleClickOrderBtn}>
                     Оформить заказ
                 </Button>
             </div>

@@ -16,7 +16,7 @@ interface IUserState {
   textError: string;
 }
 
-const userInitialState: IUserState = {
+export const userInitialState: IUserState = {
   isAuthCheck: false,
   isSuccess: false,
   user: null,

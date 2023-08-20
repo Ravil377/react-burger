@@ -8,7 +8,7 @@ interface ITabContentProps {
 
 export const TabContent: FC<ITabContentProps> = (props) => {
     return (
-        <div className={`custom-scroll ${tabContentStyles.content}`} ref={props.containerRef}>
+        <div data-testid="ingredientsList" className={`custom-scroll ${tabContentStyles.content}`} ref={props.containerRef}>
             {props.children}
         </div>
     );

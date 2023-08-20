@@ -80,7 +80,7 @@ export const wsReducer = (state = initialState, action: TWSActions): TWSState =>
             return {
                 ...state,
                 error: undefined,
-                orders: action.payload.orders.reverse(),
+                orders: action.payload.orders && action.payload.orders.reverse(),
                 totalOrders: action.payload.total,
                 totalOrdersToday: action.payload.totalToday
             };

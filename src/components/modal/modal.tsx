@@ -48,8 +48,8 @@ export const Modal: FC<IModalProps> = ({ children }) => {
         (
             <>
                 <ModalOverlay modalClose={modalClose} />
-                <div className={`${modalStyles.modal} pl-10 pr-10 pt-10 pb-15`}>
-                    <button className={modalStyles.closeBtn} onClick={handleCloseBtnClick}><CloseIcon type="primary" /></button>
+                <div data-testid="modal" className={`${modalStyles.modal} pl-10 pr-10 pt-10 pb-15`}>
+                    <button data-testid="closeBtn" className={modalStyles.closeBtn} onClick={handleCloseBtnClick}><CloseIcon type="primary" /></button>
                     {children}
                 </div>
             </>

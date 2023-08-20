@@ -24,7 +24,7 @@ export const IngredientDetails = () => {
 
     return (
         <div className={ingredientDetailStyles.container}>
-            <h2 className={`${ingredientDetailStyles.title} text text_type_main-large`}>{titleDetail}</h2>
+            <h2 data-testid="modalTitle" className={`${ingredientDetailStyles.title} text text_type_main-large`}>{titleDetail}</h2>
             <img src={ingredient.image} alt={ingredient.name} />
             <p className={`${ingredientDetailStyles.name} text text_type_main-medium mt-4 mb-8`}>{ingredient.name}</p>
             <ul className={`${ingredientDetailStyles.list}`}>

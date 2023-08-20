@@ -31,6 +31,7 @@ export const IngredientCard:FC<IngredientCardProps> = ({ ingredient }) => {
     return (
         <Link 
             to={`/ingredients/:${ingredient._id}`}
+            data-testid="ingredient"
             className={`pl-4 pr-4 ${ingredientCardStyles.ingredient}`} 
             ref={dragRef} 
             onClick={handleIngredientClick} 

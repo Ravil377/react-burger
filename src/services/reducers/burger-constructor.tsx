@@ -14,7 +14,7 @@ export interface ISelectIngredientsState {
   isError: boolean;
 }
 
-const selectIngredientsInitialState: ISelectIngredientsState = {
+export const selectIngredientsInitialState: ISelectIngredientsState = {
   selectIngredients: [],
   postOrder: null,
   order: 0,
@@ -65,7 +65,8 @@ export const selectIngredientsReducer = (state = selectIngredientsInitialState, 
         case ADD_INGREDIENT: {
           let updateSelectIngredients: IIngredient[] = [];
             let prevBunPrice: number = 0;
-            const isBun = action.ingredient.type === "bun";
+            
+            const isBun = action.ingredient?.type === "bun";
             const isBunPrevState = checkBun(state.selectIngredients);
             if( isBun && isBunPrevState !== -1 ) {
                 updateSelectIngredients = [...state.selectIngredients];
@@ -80,8 +81,8 @@ export const selectIngredientsReducer = (state = selectIngredientsInitialState, 
                 : updateSelectIngredients,
               
               order: ((isBun && isBunPrevState === -1) || !isBun) 
-                ? state.order += action.ingredient.price * 2
-                : state.order = state.order - prevBunPrice * 2 + action.ingredient.price * 2
+                ? state.order += action.ingredient?.price * 2
+                : state.order = state.order - prevBunPrice * 2 + action.ingredient.price
             };
 
             

@@ -14,7 +14,7 @@ interface IIngredientsState {
     textError: string;
 }
 
-const ingredientsInitialState: IIngredientsState = {
+export const ingredientsInitialState: IIngredientsState = {
     ingredients: [],
     isLoading: false,
     isError: false,

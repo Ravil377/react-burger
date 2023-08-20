@@ -7,7 +7,7 @@ interface IIngredientDetailState {
     selectIngredientForDetail: IIngredient | null;
 }
   
-const ingredientDetailInitialState: IIngredientDetailState = {
+export const ingredientDetailInitialState: IIngredientDetailState = {
     selectIngredientForDetail: null
 };
   
